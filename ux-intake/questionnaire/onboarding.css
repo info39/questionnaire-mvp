@@ -1,0 +1,704 @@
+/* =============================================================================
+   UX Onboarding Component
+   Scoped entirely under .ux-onboarding-app
+   Supports RTL (dir="rtl" on the root), responsive layout, no Elementor deps
+============================================================================= */
+
+/* ── Reset (scoped) ──────────────────────────────────────────────────────── */
+.ux-onboarding-app *,
+.ux-onboarding-app *::before,
+.ux-onboarding-app *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Root container ──────────────────────────────────────────────────────── */
+.ux-onboarding-app {
+  --uob-accent:        #2563eb;
+  --uob-accent-hover:  #1d4ed8;
+  --uob-accent-light:  #eff6ff;
+  --uob-bg:            #ffffff;
+  --uob-surface:       #f8fafc;
+  --uob-border:        #e2e8f0;
+  --uob-text:          #1e293b;
+  --uob-text-muted:    #64748b;
+  --uob-text-light:    #94a3b8;
+  --uob-success:       #16a34a;
+  --uob-warning:       #d97706;
+  --uob-danger:        #dc2626;
+  --uob-radius:        10px;
+  --uob-radius-sm:     6px;
+  --uob-shadow:        0 1px 3px 0 rgb(0 0 0 / .10), 0 1px 2px -1px rgb(0 0 0 / .10);
+  --uob-shadow-md:     0 4px 6px -1px rgb(0 0 0 / .10), 0 2px 4px -2px rgb(0 0 0 / .10);
+  --uob-font:          -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --uob-sidebar-w:     240px;
+  --uob-transition:    150ms ease;
+
+  font-family:   var(--uob-font);
+  font-size:     16px;
+  line-height:   1.6;
+  color:         var(--uob-text);
+  background:    var(--uob-bg);
+  border-radius: var(--uob-radius);
+  overflow:      hidden;
+  min-height:    480px;
+}
+
+/* RTL support */
+.ux-onboarding-app[dir="rtl"],
+[dir="rtl"] .ux-onboarding-app {
+  direction: rtl;
+}
+
+/* ── Layout (sidebar + main) ─────────────────────────────────────────────── */
+.uob-layout {
+  display:     flex;
+  min-height:  480px;
+  align-items: stretch;
+}
+
+/* ── Sidebar ─────────────────────────────────────────────────────────────── */
+.uob-sidebar {
+  width:          var(--uob-sidebar-w);
+  flex-shrink:    0;
+  background:     var(--uob-surface);
+  border-inline-end: 1px solid var(--uob-border);
+  padding:        24px 20px;
+  display:        flex;
+  flex-direction: column;
+  gap:            16px;
+}
+
+.uob-sidebar__progress {
+  height:           4px;
+  background:       var(--uob-border);
+  border-radius:    2px;
+  overflow:         hidden;
+}
+
+.uob-sidebar__progress-bar {
+  height:           100%;
+  background:       var(--uob-accent);
+  border-radius:    2px;
+  transition:       width 400ms ease;
+}
+
+.uob-sidebar__remaining {
+  font-size:   12px;
+  color:       var(--uob-text-muted);
+  font-weight: 500;
+}
+
+.uob-chapter-list {
+  list-style: none;
+  display:    flex;
+  flex-direction: column;
+  gap:        4px;
+}
+
+.uob-chapter {
+  display:        flex;
+  align-items:    center;
+  gap:            10px;
+  padding:        8px 10px;
+  border-radius:  var(--uob-radius-sm);
+  font-size:      13px;
+  color:          var(--uob-text-muted);
+  transition:     background var(--uob-transition), color var(--uob-transition);
+  cursor:         default;
+}
+
+.uob-chapter--active {
+  background: var(--uob-accent-light);
+  color:      var(--uob-accent);
+  font-weight: 600;
+}
+
+.uob-chapter--complete .uob-chapter__indicator {
+  background:    var(--uob-success);
+  border-color:  var(--uob-success);
+}
+
+.uob-chapter__indicator {
+  width:         10px;
+  height:        10px;
+  border-radius: 50%;
+  border:        2px solid var(--uob-border);
+  flex-shrink:   0;
+  transition:    background var(--uob-transition), border-color var(--uob-transition);
+}
+
+.uob-chapter--active .uob-chapter__indicator {
+  border-color: var(--uob-accent);
+  background:   var(--uob-accent);
+}
+
+.uob-chapter__title {
+  flex: 1;
+  white-space: nowrap;
+  overflow:    hidden;
+  text-overflow: ellipsis;
+}
+
+.uob-chapter__count {
+  font-size: 11px;
+  color:     var(--uob-text-light);
+  flex-shrink: 0;
+}
+
+/* ── Main content area ───────────────────────────────────────────────────── */
+.uob-main {
+  flex:       1;
+  padding:    40px 48px;
+  display:    flex;
+  align-items: flex-start;
+  overflow-y: auto;
+}
+
+.uob-step {
+  width:      100%;
+  max-width:  600px;
+  display:    flex;
+  flex-direction: column;
+  gap:        24px;
+  animation:  uob-fade-in 200ms ease;
+}
+
+@keyframes uob-fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Chapter label ───────────────────────────────────────────────────────── */
+.uob-chapter-label {
+  font-size:    11px;
+  font-weight:  700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color:        var(--uob-accent);
+}
+
+/* ── Question text ───────────────────────────────────────────────────────── */
+.uob-question {
+  font-size:   22px;
+  font-weight: 700;
+  line-height: 1.3;
+  color:       var(--uob-text);
+}
+
+/* ── Response bubble (dynamic reply) ─────────────────────────────────────── */
+.uob-response-bubble {
+  background:    var(--uob-accent-light);
+  border-inline-start: 3px solid var(--uob-accent);
+  padding:       12px 16px;
+  border-radius: 0 var(--uob-radius-sm) var(--uob-radius-sm) 0;
+  font-size:     14px;
+  color:         var(--uob-accent);
+  font-style:    italic;
+  animation:     uob-fade-in 200ms ease;
+}
+
+/* RTL: flip border side */
+[dir="rtl"] .uob-response-bubble,
+.ux-onboarding-app[dir="rtl"] .uob-response-bubble {
+  border-inline-start: none;
+  border-inline-end:   3px solid var(--uob-accent);
+  border-radius: var(--uob-radius-sm) 0 0 var(--uob-radius-sm);
+}
+
+/* ── Input area ──────────────────────────────────────────────────────────── */
+.uob-input-area {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ── Options (radio / checkbox) ──────────────────────────────────────────── */
+.uob-options {
+  display:        flex;
+  flex-direction: column;
+  gap:            8px;
+}
+
+.uob-option {
+  display:        flex;
+  align-items:    center;
+  gap:            12px;
+  padding:        14px 18px;
+  border:         1.5px solid var(--uob-border);
+  border-radius:  var(--uob-radius);
+  cursor:         pointer;
+  transition:     border-color var(--uob-transition),
+                  background   var(--uob-transition),
+                  box-shadow   var(--uob-transition);
+  user-select:    none;
+}
+
+.uob-option:hover {
+  border-color: var(--uob-accent);
+  background:   var(--uob-accent-light);
+}
+
+.uob-option--selected {
+  border-color: var(--uob-accent);
+  background:   var(--uob-accent-light);
+  box-shadow:   0 0 0 3px rgb(37 99 235 / .12);
+}
+
+.uob-option input[type="radio"],
+.uob-option input[type="checkbox"] {
+  width:        18px;
+  height:       18px;
+  accent-color: var(--uob-accent);
+  flex-shrink:  0;
+  cursor:       pointer;
+}
+
+.uob-option__label {
+  font-size:  15px;
+  font-weight: 500;
+  color:       var(--uob-text);
+  line-height: 1.4;
+}
+
+/* ── Textarea ────────────────────────────────────────────────────────────── */
+.uob-textarea,
+.uob-input {
+  width:         100%;
+  padding:       14px 16px;
+  border:        1.5px solid var(--uob-border);
+  border-radius: var(--uob-radius);
+  font-family:   var(--uob-font);
+  font-size:     15px;
+  color:         var(--uob-text);
+  background:    var(--uob-bg);
+  resize:        vertical;
+  transition:    border-color var(--uob-transition), box-shadow var(--uob-transition);
+  outline:       none;
+}
+
+.uob-textarea:focus,
+.uob-input:focus {
+  border-color: var(--uob-accent);
+  box-shadow:   0 0 0 3px rgb(37 99 235 / .12);
+}
+
+.uob-textarea::placeholder,
+.uob-input::placeholder {
+  color: var(--uob-text-light);
+}
+
+/* ── Validation error ────────────────────────────────────────────────────── */
+.uob-validation-error {
+  font-size:  13px;
+  color:      var(--uob-danger);
+  font-weight: 500;
+}
+
+/* ── Actions bar ─────────────────────────────────────────────────────────── */
+.uob-actions {
+  display:     flex;
+  align-items: center;
+  gap:         10px;
+  flex-wrap:   wrap;
+}
+
+/* ── Buttons ─────────────────────────────────────────────────────────────── */
+.uob-btn {
+  display:        inline-flex;
+  align-items:    center;
+  justify-content: center;
+  padding:        10px 22px;
+  border-radius:  var(--uob-radius-sm);
+  font-family:    var(--uob-font);
+  font-size:      14px;
+  font-weight:    600;
+  cursor:         pointer;
+  border:         1.5px solid transparent;
+  transition:     background   var(--uob-transition),
+                  border-color var(--uob-transition),
+                  color        var(--uob-transition),
+                  box-shadow   var(--uob-transition);
+  white-space: nowrap;
+}
+
+.uob-btn--primary {
+  background:  var(--uob-accent);
+  color:       #fff;
+  border-color: var(--uob-accent);
+}
+
+.uob-btn--primary:hover {
+  background:  var(--uob-accent-hover);
+  border-color: var(--uob-accent-hover);
+}
+
+.uob-btn--secondary {
+  background:  transparent;
+  color:       var(--uob-accent);
+  border-color: var(--uob-accent);
+}
+
+.uob-btn--secondary:hover {
+  background: var(--uob-accent-light);
+}
+
+.uob-btn--ghost {
+  background:  transparent;
+  color:       var(--uob-text-muted);
+  border-color: var(--uob-border);
+}
+
+.uob-btn--ghost:hover {
+  background:  var(--uob-surface);
+  color:       var(--uob-text);
+}
+
+/* ── Intro screen ────────────────────────────────────────────────────────── */
+.uob-intro {
+  display:        flex;
+  align-items:    center;
+  justify-content: center;
+  min-height:     480px;
+  padding:        48px 40px;
+}
+
+.uob-intro__content {
+  max-width:      520px;
+  display:        flex;
+  flex-direction: column;
+  gap:            24px;
+  text-align:     center;
+}
+
+[dir="rtl"] .uob-intro__content,
+.ux-onboarding-app[dir="rtl"] .uob-intro__content {
+  text-align: right;
+}
+
+.uob-intro__heading {
+  font-size:   28px;
+  font-weight: 800;
+  line-height: 1.25;
+  color:       var(--uob-text);
+}
+
+.uob-intro__body {
+  font-size:  16px;
+  color:      var(--uob-text-muted);
+  line-height: 1.7;
+}
+
+.uob-intro__modes {
+  display:  flex;
+  gap:      12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+[dir="rtl"] .uob-intro__modes,
+.ux-onboarding-app[dir="rtl"] .uob-intro__modes {
+  justify-content: flex-start;
+}
+
+/* ── Info card ───────────────────────────────────────────────────────────── */
+.uob-info-card,
+.uob-reflection,
+.uob-checkpoint {
+  background:    var(--uob-surface);
+  border:        1px solid var(--uob-border);
+  border-radius: var(--uob-radius);
+  padding:       32px;
+  display:       flex;
+  flex-direction: column;
+  gap:           16px;
+  width:         100%;
+}
+
+.uob-info-card__heading,
+.uob-reflection__heading,
+.uob-checkpoint__heading {
+  font-size:   20px;
+  font-weight: 700;
+  color:       var(--uob-text);
+}
+
+.uob-info-card__body,
+.uob-reflection__body,
+.uob-checkpoint__body {
+  font-size:  15px;
+  color:      var(--uob-text-muted);
+  line-height: 1.7;
+}
+
+/* ── Reflection profile card ─────────────────────────────────────────────── */
+.uob-reflection__profile {
+  background:    var(--uob-bg);
+  border:        1px solid var(--uob-border);
+  border-radius: var(--uob-radius-sm);
+  padding:       16px;
+  display:       flex;
+  flex-direction: column;
+  gap:           10px;
+}
+
+/* ── Signal rows ─────────────────────────────────────────────────────────── */
+.uob-signal-row {
+  display:     flex;
+  align-items: baseline;
+  gap:         12px;
+  font-size:   14px;
+}
+
+.uob-signal-row--wrap {
+  align-items: flex-start;
+}
+
+.uob-signal-label {
+  font-weight:  600;
+  color:        var(--uob-text-muted);
+  flex-shrink:  0;
+  min-width:    110px;
+  font-size:    13px;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.uob-signal-value {
+  color:        var(--uob-text);
+  font-weight:  500;
+  display:      flex;
+  flex-wrap:    wrap;
+  gap:          6px;
+}
+
+.uob-signal-value--tag {
+  background:    var(--uob-accent-light);
+  color:         var(--uob-accent);
+  padding:       2px 8px;
+  border-radius: 4px;
+  font-size:     13px;
+  text-transform: capitalize;
+}
+
+.uob-signal-value--low    { color: var(--uob-success); }
+.uob-signal-value--medium { color: var(--uob-warning); }
+.uob-signal-value--high   { color: var(--uob-danger);  }
+
+/* ── Tags ─────────────────────────────────────────────────────────────────── */
+.uob-tag {
+  background:    var(--uob-accent-light);
+  color:         var(--uob-accent);
+  padding:       3px 9px;
+  border-radius: 4px;
+  font-size:     12px;
+  font-weight:   600;
+  text-transform: capitalize;
+  white-space:   nowrap;
+}
+
+.uob-tag--secondary {
+  background: var(--uob-surface);
+  color:      var(--uob-text-muted);
+  border:     1px solid var(--uob-border);
+}
+
+/* ── Summary screen ──────────────────────────────────────────────────────── */
+.uob-summary {
+  padding:        40px 48px;
+  display:        flex;
+  flex-direction: column;
+  gap:            32px;
+  max-width:      720px;
+  margin:         0 auto;
+  animation:      uob-fade-in 250ms ease;
+}
+
+.uob-summary__heading {
+  font-size:   26px;
+  font-weight: 800;
+  color:       var(--uob-text);
+}
+
+.uob-summary__body {
+  font-size:  15px;
+  color:      var(--uob-text-muted);
+  line-height: 1.7;
+}
+
+.uob-summary__section-title {
+  font-size:     13px;
+  font-weight:   700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color:         var(--uob-text-muted);
+  margin-bottom: 12px;
+}
+
+.uob-summary__profile {
+  background:    var(--uob-surface);
+  border:        1px solid var(--uob-border);
+  border-radius: var(--uob-radius);
+  padding:       24px;
+  display:       flex;
+  flex-direction: column;
+  gap:           10px;
+}
+
+.uob-summary__answers {
+  display:        flex;
+  flex-direction: column;
+  gap:            24px;
+}
+
+.uob-summary__chapter {
+  display:        flex;
+  flex-direction: column;
+  gap:            16px;
+}
+
+.uob-summary__chapter-title {
+  font-size:   15px;
+  font-weight: 700;
+  color:       var(--uob-text);
+  padding-bottom: 8px;
+  border-bottom:  1px solid var(--uob-border);
+}
+
+.uob-summary__qa {
+  display:        flex;
+  flex-direction: column;
+  gap:            4px;
+}
+
+.uob-summary__q {
+  font-size:   14px;
+  color:       var(--uob-text-muted);
+  font-weight: 500;
+}
+
+.uob-summary__a {
+  font-size:  15px;
+  color:      var(--uob-text);
+  font-weight: 600;
+}
+
+.uob-summary__actions {
+  display:  flex;
+  gap:      12px;
+  flex-wrap: wrap;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .uob-layout {
+    flex-direction: column;
+  }
+
+  .uob-sidebar {
+    width:  100%;
+    border-inline-end: none;
+    border-bottom: 1px solid var(--uob-border);
+    padding: 16px 20px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .uob-sidebar__progress {
+    width: 100%;
+    order: -1;
+  }
+
+  .uob-chapter-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .uob-chapter {
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+
+  .uob-chapter__count {
+    display: none;
+  }
+
+  .uob-main {
+    padding: 24px 20px;
+  }
+
+  .uob-question {
+    font-size: 19px;
+  }
+
+  .uob-summary {
+    padding: 24px 20px;
+  }
+
+  .uob-intro {
+    padding: 32px 24px;
+    min-height: 400px;
+  }
+
+  .uob-intro__heading {
+    font-size: 22px;
+  }
+
+  .uob-intro__modes {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .uob-info-card,
+  .uob-reflection,
+  .uob-checkpoint {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .uob-option {
+    padding: 12px 14px;
+  }
+
+  .uob-option__label {
+    font-size: 14px;
+  }
+
+  .uob-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .uob-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ── Submit feedback ─────────────────────────────────────────────────────── */
+.uob-submit-feedback {
+  display:       none;
+  padding:       14px 18px;
+  border-radius: var(--uob-radius-sm);
+  font-size:     14px;
+  font-weight:   500;
+  line-height:   1.5;
+}
+
+.uob-submit-feedback--success {
+  display:     block;
+  background:  #f0fdf4;
+  color:       var(--uob-success);
+  border:      1px solid #bbf7d0;
+}
+
+.uob-submit-feedback--error {
+  display:     block;
+  background:  #fef2f2;
+  color:       var(--uob-danger);
+  border:      1px solid #fecaca;
+}

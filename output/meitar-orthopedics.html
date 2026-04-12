@@ -1,0 +1,1750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meitar Orthopedics — Tel Aviv's Premier Joint & Spine Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet">
+
+<style>
+/* ── Variables ─────────────────────────────────────────────────── */
+:root {
+  --navy:       #0D1B2A;
+  --navy-mid:   #152338;
+  --ivory:      #FAF7F2;
+  --ivory-dark: #F0EBE1;
+  --gold:       #C9A84C;
+  --gold-light: #E2C97E;
+  --gold-pale:  rgba(201,168,76,.12);
+  --text:       #1C1C1C;
+  --muted:      #6B6860;
+  --border:     rgba(201,168,76,.25);
+  --shadow:     0 20px 60px rgba(13,27,42,.10);
+  --shadow-sm:  0 4px 20px rgba(13,27,42,.07);
+  --r:          8px;
+  --r-lg:       16px;
+}
+
+/* ── Reset ─────────────────────────────────────────────────────── */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; font-size:16px; }
+body { background:var(--ivory); color:var(--text); font-family:'DM Sans',sans-serif; overflow-x:hidden; }
+img { display:block; max-width:100%; }
+a { color:inherit; text-decoration:none; }
+
+/* ── Typography ─────────────────────────────────────────────────── */
+.serif       { font-family:'Cormorant Garamond',serif; }
+.bebas       { font-family:'Bebas Neue',sans-serif; }
+
+h1,h2,h3,h4 { font-family:'Cormorant Garamond',serif; font-weight:500; line-height:1.15; }
+h1 { font-size:clamp(3rem,6vw,5.5rem); font-weight:300; }
+h2 { font-size:clamp(2.2rem,4vw,3.6rem); }
+h3 { font-size:1.55rem; font-weight:500; }
+p  { line-height:1.75; color:var(--muted); font-weight:300; }
+
+/* ── Gold rule ──────────────────────────────────────────────────── */
+.gold-rule {
+  display:block; width:60px; height:2px;
+  background:linear-gradient(90deg,var(--gold),var(--gold-light));
+  margin-bottom:1.5rem;
+}
+.gold-rule.center { margin-left:auto; margin-right:auto; margin-bottom:1.5rem; }
+
+/* ── Buttons ────────────────────────────────────────────────────── */
+.btn {
+  display:inline-flex; align-items:center; gap:.5rem;
+  padding:.9rem 2rem; border-radius:var(--r);
+  font-family:'DM Sans',sans-serif; font-weight:500; font-size:.95rem;
+  cursor:pointer; transition:all .25s ease; border:none;
+  white-space:nowrap;
+}
+.btn-gold {
+  background:var(--gold); color:var(--navy);
+  box-shadow:0 4px 20px rgba(201,168,76,.35);
+}
+.btn-gold:hover {
+  background:var(--gold-light); transform:translateY(-2px);
+  box-shadow:0 8px 28px rgba(201,168,76,.45);
+}
+.btn-outline {
+  background:transparent; color:#fff;
+  border:1.5px solid rgba(255,255,255,.4);
+}
+.btn-outline:hover {
+  background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.7);
+}
+.btn-navy {
+  background:var(--navy); color:#fff;
+  box-shadow:0 4px 20px rgba(13,27,42,.25);
+}
+.btn-navy:hover { background:var(--navy-mid); transform:translateY(-2px); }
+
+/* ── Layout helpers ─────────────────────────────────────────────── */
+.container { max-width:1160px; margin:0 auto; padding:0 1.5rem; }
+.section    { padding:7rem 0; }
+.section-sm { padding:4rem 0; }
+.tag {
+  display:inline-block; font-size:.78rem; font-weight:600; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--gold); margin-bottom:.75rem;
+}
+
+/* ── Reveal animation ───────────────────────────────────────────── */
+.reveal { opacity:0; transform:translateY(28px); transition:opacity .7s ease, transform .7s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+.reveal-delay-1 { transition-delay:.1s; }
+.reveal-delay-2 { transition-delay:.2s; }
+.reveal-delay-3 { transition-delay:.3s; }
+.reveal-delay-4 { transition-delay:.4s; }
+.reveal-delay-5 { transition-delay:.5s; }
+
+/* ══════════════════════════════════════════════════════════════════
+   NAV
+══════════════════════════════════════════════════════════════════ */
+#nav {
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  padding:1.25rem 0;
+  transition:background .35s ease, box-shadow .35s ease, padding .35s ease;
+}
+#nav.scrolled {
+  background:rgba(13,27,42,.97);
+  backdrop-filter:blur(12px);
+  box-shadow:0 2px 30px rgba(0,0,0,.25);
+  padding:.85rem 0;
+}
+.nav-inner {
+  display:flex; align-items:center; justify-content:space-between;
+}
+.nav-logo {
+  display:flex; align-items:center; gap:.75rem;
+}
+.nav-logo-mark {
+  width:38px; height:38px; border-radius:50%;
+  background:linear-gradient(135deg,var(--gold),var(--gold-light));
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Cormorant Garamond',serif; font-weight:700; font-size:1.1rem;
+  color:var(--navy);
+}
+.nav-logo-text {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.2rem; font-weight:600; color:#fff;
+  line-height:1.1;
+}
+.nav-logo-text span {
+  display:block; font-size:.65rem; font-weight:400; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--gold); font-family:'DM Sans',sans-serif;
+}
+.nav-links {
+  display:flex; align-items:center; gap:2rem; list-style:none;
+}
+.nav-links a {
+  font-size:.88rem; font-weight:400; color:rgba(255,255,255,.75);
+  transition:color .2s; letter-spacing:.02em;
+}
+.nav-links a:hover { color:#fff; }
+.nav-cta { display:flex; align-items:center; gap:1rem; }
+.nav-phone {
+  display:flex; align-items:center; gap:.4rem;
+  color:var(--gold); font-size:.88rem; font-weight:500;
+}
+.nav-phone svg { width:14px; height:14px; }
+.hamburger {
+  display:none; flex-direction:column; gap:5px;
+  background:none; border:none; cursor:pointer; padding:4px;
+}
+.hamburger span {
+  display:block; width:24px; height:2px; background:#fff;
+  transition:all .25s ease;
+}
+.mobile-menu {
+  display:none; position:fixed; inset:0; background:var(--navy);
+  z-index:99; flex-direction:column; align-items:center;
+  justify-content:center; gap:2rem;
+}
+.mobile-menu.open { display:flex; }
+.mobile-menu a {
+  font-family:'Cormorant Garamond',serif; font-size:2rem;
+  color:#fff; font-weight:400;
+  transition:color .2s;
+}
+.mobile-menu a:hover { color:var(--gold); }
+
+/* ══════════════════════════════════════════════════════════════════
+   HERO
+══════════════════════════════════════════════════════════════════ */
+#hero {
+  min-height:100vh;
+  background:var(--navy);
+  position:relative; overflow:hidden;
+  display:flex; align-items:center;
+}
+
+/* Layered background atmosphere */
+#hero::before {
+  content:'';
+  position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 70% 50%, rgba(201,168,76,.07) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 80% at 20% 80%, rgba(21,35,56,.9) 0%, transparent 60%);
+}
+#hero::after {
+  content:'';
+  position:absolute; inset:0;
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,.018) 40px),
+    repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,255,255,.018) 40px);
+}
+
+/* Decorative joint SVG silhouette */
+.hero-deco {
+  position:absolute; right:-40px; top:50%;
+  transform:translateY(-50%);
+  width:min(520px, 50vw); opacity:.045;
+  pointer-events:none;
+}
+
+/* Diagonal accent bar */
+.hero-accent-bar {
+  position:absolute; left:0; top:0; bottom:0; width:4px;
+  background:linear-gradient(to bottom, transparent 0%, var(--gold) 30%, var(--gold-light) 70%, transparent 100%);
+}
+
+.hero-content {
+  position:relative; z-index:2;
+  max-width:780px;
+}
+.hero-eyebrow {
+  display:flex; align-items:center; gap:.75rem; margin-bottom:1.75rem;
+}
+.hero-eyebrow-line {
+  width:40px; height:1.5px; background:var(--gold);
+}
+.hero-eyebrow span {
+  font-size:.78rem; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--gold); font-weight:500; font-family:'DM Sans',sans-serif;
+}
+
+.hero h1 {
+  color:#fff; margin-bottom:1.5rem;
+  text-shadow:0 2px 40px rgba(0,0,0,.3);
+}
+.hero h1 em {
+  font-style:italic; color:var(--gold-light);
+}
+.hero-sub {
+  font-size:1.05rem; color:rgba(255,255,255,.65); max-width:560px;
+  line-height:1.75; margin-bottom:2.5rem; font-weight:300;
+}
+
+.hero-cta-group {
+  display:flex; flex-wrap:wrap; align-items:center; gap:1rem;
+  margin-bottom:3.5rem;
+}
+.hero-availability {
+  display:flex; align-items:center; gap:.5rem;
+  font-size:.82rem; color:rgba(255,255,255,.55);
+}
+.availability-dot {
+  width:7px; height:7px; border-radius:50%;
+  background:#4ade80;
+  box-shadow:0 0 0 2px rgba(74,222,128,.2);
+  animation:pulse-dot 2s infinite;
+}
+@keyframes pulse-dot {
+  0%,100% { box-shadow:0 0 0 2px rgba(74,222,128,.2); }
+  50% { box-shadow:0 0 0 5px rgba(74,222,128,.0); }
+}
+
+/* Hero trust strip */
+.hero-trust {
+  display:flex; flex-wrap:wrap; gap:2rem; align-items:center;
+}
+.hero-trust-item {
+  display:flex; align-items:center; gap:.6rem;
+}
+.hero-trust-item .number {
+  font-family:'Bebas Neue',sans-serif; font-size:1.8rem;
+  color:var(--gold); line-height:1;
+}
+.hero-trust-item .label {
+  font-size:.75rem; color:rgba(255,255,255,.5); line-height:1.3;
+  font-weight:300;
+}
+.hero-trust-divider {
+  width:1px; height:32px; background:rgba(255,255,255,.12);
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   TRUST / AFFILIATIONS BAR
+══════════════════════════════════════════════════════════════════ */
+#trust-bar {
+  background:var(--ivory-dark);
+  border-top:1px solid rgba(201,168,76,.2);
+  border-bottom:1px solid rgba(201,168,76,.2);
+  padding:1.6rem 0;
+}
+.trust-bar-inner {
+  display:flex; flex-wrap:wrap; align-items:center;
+  justify-content:space-between; gap:1.5rem;
+}
+.trust-bar-label {
+  font-size:.72rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--muted); font-weight:500; white-space:nowrap;
+}
+.trust-logos {
+  display:flex; flex-wrap:wrap; align-items:center; gap:2rem;
+}
+.trust-logo-item {
+  display:flex; align-items:center; gap:.5rem;
+  font-size:.82rem; font-weight:500; color:var(--muted);
+  transition:color .2s;
+}
+.trust-logo-item:hover { color:var(--text); }
+.trust-logo-icon {
+  width:28px; height:28px; border-radius:50%;
+  background:var(--gold-pale); border:1px solid var(--border);
+  display:flex; align-items:center; justify-content:center;
+  font-size:.65rem; font-weight:700; color:var(--gold);
+  flex-shrink:0;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   SERVICES
+══════════════════════════════════════════════════════════════════ */
+#services { background:var(--ivory); }
+.services-header { text-align:center; max-width:640px; margin:0 auto 4rem; }
+.services-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
+  gap:1.5rem;
+}
+.service-card {
+  background:#fff; border-radius:var(--r-lg);
+  border:1px solid var(--ivory-dark);
+  padding:2rem 2rem 2.25rem;
+  position:relative; overflow:hidden;
+  transition:transform .3s ease, box-shadow .3s ease;
+  cursor:default;
+}
+.service-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg, var(--gold), var(--gold-light));
+  transform:scaleX(0); transform-origin:left;
+  transition:transform .4s ease;
+}
+.service-card:hover { transform:translateY(-4px); box-shadow:var(--shadow); }
+.service-card:hover::before { transform:scaleX(1); }
+.service-icon {
+  width:48px; height:48px; border-radius:var(--r);
+  background:var(--gold-pale); border:1px solid var(--border);
+  display:flex; align-items:center; justify-content:center;
+  margin-bottom:1.25rem;
+}
+.service-icon svg { width:22px; height:22px; color:var(--gold); }
+.service-card h3 { margin-bottom:.6rem; font-size:1.35rem; }
+.service-card p  { font-size:.9rem; line-height:1.7; }
+.service-link {
+  display:inline-flex; align-items:center; gap:.3rem;
+  margin-top:1.25rem; font-size:.85rem; font-weight:500;
+  color:var(--gold); transition:gap .2s;
+}
+.service-link:hover { gap:.6rem; }
+
+/* ══════════════════════════════════════════════════════════════════
+   STATS / WHY US
+══════════════════════════════════════════════════════════════════ */
+#stats {
+  background:var(--navy);
+  position:relative; overflow:hidden;
+}
+#stats::before {
+  content:''; position:absolute; inset:0;
+  background:radial-gradient(ellipse 70% 80% at 50% 50%, rgba(201,168,76,.06) 0%, transparent 60%);
+}
+.stats-inner { position:relative; z-index:1; }
+.stats-top {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:4rem; align-items:center; margin-bottom:5rem;
+}
+.stats-text h2 { color:#fff; margin-bottom:1.25rem; }
+.stats-text p  { color:rgba(255,255,255,.55); font-size:1rem; max-width:420px; }
+.stats-text .gold-rule { margin-bottom:1.25rem; }
+.stats-bullets {
+  margin-top:2rem; display:flex; flex-direction:column; gap:.85rem;
+}
+.stats-bullet {
+  display:flex; align-items:flex-start; gap:.75rem; font-size:.9rem;
+  color:rgba(255,255,255,.65);
+}
+.stats-bullet-dot {
+  width:6px; height:6px; border-radius:50%; background:var(--gold);
+  margin-top:.45rem; flex-shrink:0;
+}
+
+.stats-image-col {
+  display:flex; align-items:center; justify-content:center;
+}
+.stats-badge-cluster {
+  position:relative; width:340px; height:340px;
+}
+.badge-center {
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  width:170px; height:170px; border-radius:50%;
+  background:linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  box-shadow:0 0 0 15px rgba(201,168,76,.1), 0 0 0 30px rgba(201,168,76,.05);
+}
+.badge-center .big { font-family:'Bebas Neue',sans-serif; font-size:3.5rem; color:var(--navy); line-height:1; }
+.badge-center .small { font-size:.7rem; text-transform:uppercase; letter-spacing:.1em; color:var(--navy); font-weight:600; }
+.badge-orbit {
+  position:absolute; background:rgba(255,255,255,.06);
+  border:1px solid rgba(201,168,76,.2); border-radius:var(--r);
+  padding:.9rem 1.1rem; text-align:center;
+  backdrop-filter:blur(8px);
+}
+.badge-orbit .num { font-family:'Bebas Neue',sans-serif; font-size:1.8rem; color:var(--gold); line-height:1; }
+.badge-orbit .lbl { font-size:.65rem; color:rgba(255,255,255,.5); letter-spacing:.08em; text-transform:uppercase; }
+.badge-tl { top:10px; left:10px; }
+.badge-tr { top:10px; right:10px; }
+.badge-bl { bottom:10px; left:10px; }
+.badge-br { bottom:10px; right:10px; }
+
+/* ── Numbers row ── */
+.stats-numbers {
+  display:grid; grid-template-columns:repeat(4,1fr);
+  gap:1px; background:rgba(255,255,255,.07);
+  border-radius:var(--r-lg); overflow:hidden;
+  border:1px solid rgba(255,255,255,.07);
+}
+.stat-item {
+  padding:2.25rem 1.5rem; text-align:center;
+  background:rgba(255,255,255,.02);
+  transition:background .25s;
+}
+.stat-item:hover { background:rgba(201,168,76,.06); }
+.stat-number {
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(2.8rem,4vw,4rem); color:var(--gold); line-height:1;
+  margin-bottom:.35rem;
+}
+.stat-label { font-size:.8rem; color:rgba(255,255,255,.5); letter-spacing:.05em; }
+
+/* ══════════════════════════════════════════════════════════════════
+   DOCTORS
+══════════════════════════════════════════════════════════════════ */
+#doctors { background:var(--ivory-dark); }
+.doctors-header { text-align:center; max-width:560px; margin:0 auto 4rem; }
+.doctors-grid {
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:1.5rem;
+}
+.doctor-card {
+  background:#fff; border-radius:var(--r-lg);
+  border:1px solid rgba(0,0,0,.05);
+  overflow:hidden;
+  transition:transform .3s, box-shadow .3s;
+}
+.doctor-card:hover { transform:translateY(-5px); box-shadow:var(--shadow); }
+.doctor-card-top {
+  background:var(--navy); padding:2rem 2rem 2.5rem;
+  position:relative; overflow:hidden;
+}
+.doctor-card-top::before {
+  content:''; position:absolute; bottom:-30px; right:-30px;
+  width:120px; height:120px; border-radius:50%;
+  background:rgba(201,168,76,.08);
+}
+.doctor-avatar {
+  width:80px; height:80px; border-radius:50%;
+  border:3px solid var(--gold);
+  background:linear-gradient(135deg,rgba(201,168,76,.25),rgba(201,168,76,.1));
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Cormorant Garamond',serif; font-size:1.8rem; font-weight:600;
+  color:var(--gold); margin-bottom:1rem; position:relative; z-index:1;
+}
+.doctor-name { font-family:'Cormorant Garamond',serif; font-size:1.45rem; color:#fff; margin-bottom:.25rem; }
+.doctor-title { font-size:.82rem; color:var(--gold); font-weight:500; letter-spacing:.04em; }
+.doctor-card-body { padding:1.5rem 2rem 2rem; }
+.doctor-creds { display:flex; flex-direction:column; gap:.6rem; margin-bottom:1.25rem; }
+.doctor-cred {
+  display:flex; align-items:flex-start; gap:.5rem;
+  font-size:.83rem; color:var(--muted);
+}
+.cred-icon { color:var(--gold); font-size:.7rem; margin-top:.18rem; flex-shrink:0; }
+.doctor-focus {
+  padding:.75rem 1rem; background:var(--gold-pale);
+  border-radius:var(--r); border-left:3px solid var(--gold);
+  font-size:.82rem; color:var(--text); font-weight:400; line-height:1.5;
+}
+.doctor-focus span { font-weight:600; }
+
+/* ══════════════════════════════════════════════════════════════════
+   TESTIMONIALS
+══════════════════════════════════════════════════════════════════ */
+#testimonials { background:var(--ivory); overflow:hidden; }
+.testimonials-header { text-align:center; max-width:560px; margin:0 auto 4rem; }
+.testimonials-track {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem;
+}
+.testimonial-card {
+  background:#fff; border-radius:var(--r-lg);
+  padding:2rem; border:1px solid rgba(0,0,0,.05);
+  position:relative;
+  transition:transform .3s, box-shadow .3s;
+}
+.testimonial-card:hover { transform:translateY(-3px); box-shadow:var(--shadow-sm); }
+.testimonial-card::before {
+  content:'\201C';
+  font-family:'Cormorant Garamond',serif; font-size:5rem; line-height:1;
+  color:var(--gold); opacity:.2; position:absolute; top:.75rem; left:1.5rem;
+}
+.testimonial-stars {
+  display:flex; gap:2px; color:var(--gold);
+  font-size:.9rem; margin-bottom:1.1rem;
+}
+.testimonial-text {
+  font-size:.92rem; line-height:1.75; color:var(--text); font-weight:300;
+  margin-bottom:1.5rem; position:relative; z-index:1;
+}
+.testimonial-author {
+  display:flex; align-items:center; gap:.75rem;
+  padding-top:1rem; border-top:1px solid var(--ivory-dark);
+}
+.author-avatar {
+  width:38px; height:38px; border-radius:50%;
+  background:linear-gradient(135deg,var(--gold-pale),var(--ivory-dark));
+  border:1.5px solid var(--border);
+  display:flex; align-items:center; justify-content:center;
+  font-size:.8rem; font-weight:600; color:var(--gold);
+}
+.author-name { font-size:.85rem; font-weight:500; color:var(--text); }
+.author-procedure { font-size:.75rem; color:var(--muted); }
+.testimonial-verified {
+  margin-left:auto; display:flex; align-items:center; gap:.3rem;
+  font-size:.72rem; color:var(--gold); font-weight:500;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   PROCESS
+══════════════════════════════════════════════════════════════════ */
+#process {
+  background:var(--navy); position:relative; overflow:hidden;
+}
+#process::after {
+  content:''; position:absolute; bottom:0; left:0; right:0; height:1px;
+  background:linear-gradient(90deg,transparent,rgba(201,168,76,.3),transparent);
+}
+.process-header { text-align:center; max-width:520px; margin:0 auto 4rem; }
+.process-header h2 { color:#fff; }
+.process-header p  { color:rgba(255,255,255,.5); }
+.process-steps {
+  display:grid; grid-template-columns:repeat(4,1fr);
+  gap:1px; position:relative;
+}
+/* connecting line */
+.process-steps::before {
+  content:''; position:absolute; top:40px; left:12.5%; right:12.5%;
+  height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  z-index:0;
+}
+.process-step {
+  padding:0 1.5rem 2.5rem; text-align:center; position:relative; z-index:1;
+}
+.step-num {
+  width:80px; height:80px; border-radius:50%;
+  background:var(--navy-mid); border:2px solid var(--gold);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Bebas Neue',sans-serif; font-size:2rem; color:var(--gold);
+  margin:0 auto 1.5rem;
+  transition:background .3s;
+}
+.process-step:hover .step-num { background:var(--gold-pale); }
+.step-title { font-family:'Cormorant Garamond',serif; font-size:1.25rem; color:#fff; margin-bottom:.5rem; }
+.step-desc  { font-size:.82rem; color:rgba(255,255,255,.45); line-height:1.6; }
+
+/* ══════════════════════════════════════════════════════════════════
+   INSURANCE / HMO STRIP
+══════════════════════════════════════════════════════════════════ */
+#insurance {
+  background:var(--ivory-dark);
+  border-top:1px solid rgba(201,168,76,.15);
+  border-bottom:1px solid rgba(201,168,76,.15);
+  padding:2.5rem 0;
+}
+.insurance-inner {
+  display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:3rem;
+}
+.insurance-label {
+  font-size:.75rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--muted); text-align:center;
+}
+.insurance-logos { display:flex; flex-wrap:wrap; gap:2.5rem; align-items:center; }
+.hmo-badge {
+  display:flex; flex-direction:column; align-items:center; gap:.35rem;
+  opacity:.65; transition:opacity .2s;
+}
+.hmo-badge:hover { opacity:1; }
+.hmo-icon {
+  width:44px; height:44px; border-radius:var(--r);
+  border:1px solid var(--border); background:#fff;
+  display:flex; align-items:center; justify-content:center;
+  font-size:.75rem; font-weight:700; color:var(--gold);
+}
+.hmo-name { font-size:.7rem; color:var(--muted); font-weight:500; }
+
+/* ══════════════════════════════════════════════════════════════════
+   FAQ
+══════════════════════════════════════════════════════════════════ */
+#faq { background:var(--ivory); }
+.faq-inner {
+  display:grid; grid-template-columns:1fr 2fr; gap:5rem; align-items:start;
+}
+.faq-sidebar h2 { margin-bottom:1rem; }
+.faq-sidebar p  { font-size:.9rem; margin-bottom:2rem; }
+.faq-contact-box {
+  padding:1.5rem; border-radius:var(--r-lg);
+  background:var(--navy); color:#fff; text-align:center;
+}
+.faq-contact-box p {
+  color:rgba(255,255,255,.6); font-size:.85rem; margin-bottom:1rem;
+}
+.faq-contact-box strong { font-size:1.1rem; display:block; margin-bottom:.5rem; }
+.faq-list { display:flex; flex-direction:column; gap:.75rem; }
+.faq-item {
+  border:1px solid rgba(0,0,0,.07); border-radius:var(--r);
+  background:#fff; overflow:hidden;
+  transition:border-color .25s;
+}
+.faq-item.open { border-color:var(--border); }
+.faq-q {
+  padding:1.25rem 1.5rem; display:flex; align-items:center;
+  justify-content:space-between; gap:1rem;
+  cursor:pointer; user-select:none;
+  font-weight:500; font-size:.93rem; color:var(--text);
+}
+.faq-q:hover { color:var(--navy); }
+.faq-arrow {
+  width:20px; height:20px; flex-shrink:0;
+  border:1.5px solid var(--border); border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  transition:transform .3s, background .25s;
+  font-size:.7rem; color:var(--gold);
+}
+.faq-item.open .faq-arrow { transform:rotate(180deg); background:var(--gold-pale); }
+.faq-a {
+  max-height:0; overflow:hidden;
+  transition:max-height .4s ease, padding .3s ease;
+  font-size:.88rem; color:var(--muted); line-height:1.75;
+  padding:0 1.5rem;
+}
+.faq-item.open .faq-a { max-height:300px; padding-bottom:1.25rem; }
+
+/* ══════════════════════════════════════════════════════════════════
+   CTA / BOOKING
+══════════════════════════════════════════════════════════════════ */
+#booking {
+  background:var(--navy); position:relative; overflow:hidden;
+}
+#booking::before {
+  content:''; position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse 60% 80% at 0% 50%, rgba(201,168,76,.08) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 80% at 100% 50%, rgba(21,35,56,.5) 0%, transparent 50%);
+}
+.booking-inner {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:5rem; align-items:center; position:relative; z-index:1;
+}
+.booking-text h2 { color:#fff; margin-bottom:1rem; }
+.booking-text .gold-rule { margin-bottom:1rem; }
+.booking-text p { color:rgba(255,255,255,.55); margin-bottom:2rem; }
+.booking-trust-list {
+  display:flex; flex-direction:column; gap:.75rem; margin-bottom:2.5rem;
+}
+.booking-trust-item {
+  display:flex; align-items:center; gap:.75rem;
+  font-size:.88rem; color:rgba(255,255,255,.65);
+}
+.btl-check {
+  width:20px; height:20px; border-radius:50%;
+  background:rgba(74,222,128,.15); border:1px solid rgba(74,222,128,.35);
+  display:flex; align-items:center; justify-content:center;
+  font-size:.65rem; color:#4ade80; flex-shrink:0;
+}
+.booking-contact {
+  display:flex; gap:1rem; flex-wrap:wrap;
+}
+.contact-chip {
+  display:flex; align-items:center; gap:.5rem;
+  padding:.6rem 1rem; border-radius:var(--r);
+  background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1);
+  font-size:.85rem; color:rgba(255,255,255,.7); transition:all .2s;
+  text-decoration:none;
+}
+.contact-chip:hover { background:rgba(255,255,255,.1); color:#fff; }
+.contact-chip svg { width:14px; height:14px; flex-shrink:0; }
+
+/* Booking form */
+.booking-form {
+  background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1);
+  border-radius:var(--r-lg); padding:2.5rem;
+  backdrop-filter:blur(8px);
+}
+.booking-form h3 {
+  font-family:'Cormorant Garamond',serif; font-size:1.5rem;
+  color:#fff; margin-bottom:.35rem;
+}
+.booking-form > p { font-size:.83rem; color:rgba(255,255,255,.45); margin-bottom:2rem; }
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+.form-group { margin-bottom:1.1rem; }
+.form-group label {
+  display:block; font-size:.78rem; color:rgba(255,255,255,.5);
+  font-weight:500; letter-spacing:.04em; margin-bottom:.4rem;
+  text-transform:uppercase;
+}
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width:100%; padding:.75rem 1rem;
+  background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12);
+  border-radius:var(--r); color:#fff; font-family:'DM Sans',sans-serif;
+  font-size:.9rem; transition:border-color .2s, background .2s;
+  outline:none;
+}
+.form-group input::placeholder,
+.form-group textarea::placeholder { color:rgba(255,255,255,.25); }
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color:var(--gold); background:rgba(255,255,255,.09);
+}
+.form-group select option { background:var(--navy); color:#fff; }
+.form-group textarea { resize:none; height:90px; }
+.form-submit-row {
+  display:flex; align-items:center; gap:1rem;
+  margin-top:1.5rem;
+}
+.form-note { font-size:.75rem; color:rgba(255,255,255,.35); line-height:1.4; }
+.btn-full { width:100%; justify-content:center; }
+
+/* ══════════════════════════════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════════════════════════════ */
+footer {
+  background:#080f18; color:rgba(255,255,255,.45);
+  padding:3.5rem 0 2rem;
+}
+.footer-inner {
+  display:grid; grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:3rem; margin-bottom:3rem;
+}
+.footer-brand .nav-logo-text { font-size:1.35rem; }
+.footer-brand p {
+  font-size:.82rem; color:rgba(255,255,255,.35);
+  margin-top:1rem; line-height:1.7; max-width:280px;
+}
+.footer-col h4 {
+  font-family:'DM Sans',sans-serif; font-size:.78rem;
+  text-transform:uppercase; letter-spacing:.12em;
+  color:rgba(255,255,255,.6); font-weight:600; margin-bottom:1.25rem;
+}
+.footer-col ul { list-style:none; display:flex; flex-direction:column; gap:.6rem; }
+.footer-col ul a {
+  font-size:.85rem; color:rgba(255,255,255,.35);
+  transition:color .2s;
+}
+.footer-col ul a:hover { color:var(--gold); }
+.footer-bottom {
+  padding-top:1.5rem; border-top:1px solid rgba(255,255,255,.06);
+  display:flex; align-items:center; justify-content:space-between;
+  flex-wrap:wrap; gap:1rem; font-size:.78rem;
+}
+.footer-bottom a { color:rgba(255,255,255,.3); transition:color .2s; }
+.footer-bottom a:hover { color:var(--gold); }
+.footer-moh {
+  display:flex; align-items:center; gap:.5rem;
+  font-size:.75rem; color:rgba(255,255,255,.3);
+}
+.moh-badge {
+  padding:.25rem .6rem; border-radius:4px;
+  background:rgba(201,168,76,.1); border:1px solid rgba(201,168,76,.2);
+  font-size:.68rem; color:var(--gold); font-weight:600; letter-spacing:.06em;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   WHATSAPP FLOAT
+══════════════════════════════════════════════════════════════════ */
+.wa-float {
+  position:fixed; bottom:1.75rem; right:1.75rem; z-index:50;
+  display:flex; align-items:center; gap:.75rem;
+  background:#25d366; color:#fff; border-radius:50px;
+  padding:.8rem 1.1rem .8rem .9rem;
+  box-shadow:0 6px 30px rgba(37,211,102,.4);
+  font-weight:500; font-size:.88rem;
+  transition:transform .25s, box-shadow .25s;
+  cursor:pointer; text-decoration:none;
+}
+.wa-float:hover {
+  transform:translateY(-3px) scale(1.02);
+  box-shadow:0 10px 35px rgba(37,211,102,.55);
+}
+.wa-float svg { width:22px; height:22px; flex-shrink:0; }
+.wa-label { white-space:nowrap; }
+
+/* ══════════════════════════════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════════════════════════════ */
+@media (max-width:1024px) {
+  .stats-top { grid-template-columns:1fr; gap:2.5rem; }
+  .stats-numbers { grid-template-columns:repeat(2,1fr); }
+  .footer-inner { grid-template-columns:1fr 1fr; }
+  .faq-inner { grid-template-columns:1fr; gap:2rem; }
+  .booking-inner { grid-template-columns:1fr; gap:3rem; }
+  .process-steps { grid-template-columns:repeat(2,1fr); gap:2rem; }
+  .process-steps::before { display:none; }
+}
+@media (max-width:768px) {
+  .section { padding:4.5rem 0; }
+  .nav-links, .nav-cta .btn { display:none; }
+  .nav-phone { display:none; }
+  .hamburger { display:flex; }
+  .testimonials-track { grid-template-columns:1fr; }
+  .doctors-grid { grid-template-columns:1fr; }
+  .services-grid { grid-template-columns:1fr; }
+  .stats-badge-cluster { display:none; }
+  .stats-top { grid-template-columns:1fr; }
+  .form-row { grid-template-columns:1fr; }
+  .footer-inner { grid-template-columns:1fr; gap:2rem; }
+  .process-steps { grid-template-columns:1fr 1fr; }
+  .trust-bar-inner { justify-content:center; }
+  .wa-label { display:none; }
+  .wa-float { padding:.9rem; border-radius:50%; }
+}
+@media (max-width:480px) {
+  .hero-trust { gap:1rem; }
+  .hero-trust-divider { display:none; }
+  .process-steps { grid-template-columns:1fr; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ══ NAV ══════════════════════════════════════════════════════ -->
+<nav id="nav">
+  <div class="container">
+    <div class="nav-inner">
+      <div class="nav-logo">
+        <div class="nav-logo-mark">M</div>
+        <div class="nav-logo-text">
+          Meitar Orthopedics
+          <span>Tel Aviv · מרכז מיתר לאורתופדיה</span>
+        </div>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#doctors">Doctors</a></li>
+        <li><a href="#testimonials">Patients</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#booking">Contact</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="tel:+97236001234" class="nav-phone">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.09 1.18 2 2 0 012.06 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          03-600-1234
+        </a>
+        <a href="#booking" class="btn btn-gold">Book Consultation</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#services" onclick="closeMobileMenu()">Services</a>
+  <a href="#doctors" onclick="closeMobileMenu()">Doctors</a>
+  <a href="#testimonials" onclick="closeMobileMenu()">Patients</a>
+  <a href="#faq" onclick="closeMobileMenu()">FAQ</a>
+  <a href="#booking" onclick="closeMobileMenu()" style="color:var(--gold)">Book Consultation</a>
+</div>
+
+<!-- ══ HERO ══════════════════════════════════════════════════════ -->
+<section id="hero">
+  <div class="hero-accent-bar"></div>
+
+  <!-- Decorative skeleton/joint SVG -->
+  <svg class="hero-deco" viewBox="0 0 400 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="200" cy="200" rx="90" ry="130" stroke="white" stroke-width="1.5"/>
+    <ellipse cx="200" cy="200" rx="55" ry="85" stroke="white" stroke-width="1"/>
+    <circle cx="200" cy="100" r="35" stroke="white" stroke-width="1.5"/>
+    <circle cx="200" cy="310" r="35" stroke="white" stroke-width="1.5"/>
+    <line x1="200" y1="135" x2="200" y2="165" stroke="white" stroke-width="1.5"/>
+    <line x1="200" y1="240" x2="200" y2="275" stroke="white" stroke-width="1.5"/>
+    <path d="M150 200 Q120 200 110 220 Q100 240 120 260 Q140 280 170 270" stroke="white" stroke-width="1"/>
+    <path d="M250 200 Q280 200 290 220 Q300 240 280 260 Q260 280 230 270" stroke="white" stroke-width="1"/>
+    <circle cx="200" cy="200" r="8" fill="white" fill-opacity="0.15"/>
+    <circle cx="200" cy="100" r="8" fill="white" fill-opacity="0.1"/>
+    <circle cx="200" cy="310" r="8" fill="white" fill-opacity="0.1"/>
+  </svg>
+
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-eyebrow reveal">
+        <div class="hero-eyebrow-line"></div>
+        <span>Tel Aviv's Premier Orthopedic Institute</span>
+      </div>
+
+      <h1 class="reveal reveal-delay-1">
+        Move Without<br>
+        <em>Pain or Limits.</em>
+      </h1>
+
+      <p class="hero-sub reveal reveal-delay-2">
+        Board-certified orthopedic specialists dedicated to joint preservation,
+        minimally-invasive surgery, and precision rehabilitation — tailored for
+        every patient at every stage of life.
+      </p>
+
+      <div class="hero-cta-group reveal reveal-delay-3">
+        <a href="#booking" class="btn btn-gold" style="font-size:1rem; padding:1rem 2.25rem;">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Book a Consultation
+        </a>
+        <a href="tel:+97236001234" class="btn btn-outline">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.09 1.18 2 2 0 012.06 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          Call 03-600-1234
+        </a>
+        <div class="hero-availability">
+          <div class="availability-dot"></div>
+          Next appointment: <strong style="color:#fff;margin-left:.25rem;">Tomorrow, 9:00 AM</strong>
+        </div>
+      </div>
+
+      <div class="hero-trust reveal reveal-delay-4">
+        <div class="hero-trust-item">
+          <div class="number" data-count="1200">0</div>
+          <div class="label">Successful<br>Procedures</div>
+        </div>
+        <div class="hero-trust-divider"></div>
+        <div class="hero-trust-item">
+          <div class="number" data-count="18">0</div>
+          <div class="label">Years of<br>Excellence</div>
+        </div>
+        <div class="hero-trust-divider"></div>
+        <div class="hero-trust-item">
+          <div class="number">4.9★</div>
+          <div class="label">Patient<br>Rating</div>
+        </div>
+        <div class="hero-trust-divider"></div>
+        <div class="hero-trust-item">
+          <div class="number" data-count="4">0</div>
+          <div class="label">HMO<br>Partners</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TRUST BAR ═════════════════════════════════════════════════ -->
+<section id="trust-bar">
+  <div class="container">
+    <div class="trust-bar-inner">
+      <div class="trust-bar-label">Certified & Affiliated</div>
+      <div class="trust-logos">
+        <div class="trust-logo-item">
+          <div class="trust-logo-icon">MH</div>
+          Ministry of Health
+        </div>
+        <div class="trust-logo-item">
+          <div class="trust-logo-icon">IA</div>
+          Israeli Orthopedic Assoc.
+        </div>
+        <div class="trust-logo-item">
+          <div class="trust-logo-icon">HS</div>
+          Sheba Medical Center
+        </div>
+        <div class="trust-logo-item">
+          <div class="trust-logo-icon">AB</div>
+          American Board Certified
+        </div>
+        <div class="trust-logo-item">
+          <div class="trust-logo-icon">IC</div>
+          Ichilov Hospital
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SERVICES ══════════════════════════════════════════════════ -->
+<section id="services" class="section">
+  <div class="container">
+    <div class="services-header reveal">
+      <span class="tag">Our Specialties</span>
+      <span class="gold-rule center"></span>
+      <h2>Comprehensive<br>Orthopedic Care</h2>
+      <p style="margin-top:1rem;">From non-invasive treatment to advanced reconstructive surgery, our team covers the full spectrum of musculoskeletal conditions.</p>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L12 22M8 6L16 6M8 18L16 18M4 10L20 10M4 14L20 14"/></svg>
+        </div>
+        <h3>Spine & Back</h3>
+        <p>From disc herniation to spinal stenosis — comprehensive diagnosis and minimally invasive solutions that restore mobility and eliminate chronic pain.</p>
+        <a href="#booking" class="service-link">Book consultation →</a>
+      </div>
+
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="4"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+        </div>
+        <h3>Knee Replacement</h3>
+        <p>Partial and total knee arthroplasty using computer-assisted navigation and implant systems proven to deliver 20+ years of natural function.</p>
+        <a href="#booking" class="service-link">Book consultation →</a>
+      </div>
+
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22C6.5 22 2 17.5 2 12S6.5 2 12 2s10 4.5 10 10-4.5 10-10 10z"/><path d="M12 8v4l3 3"/></svg>
+        </div>
+        <h3>Hip Reconstruction</h3>
+        <p>Anterior-approach hip replacement with faster recovery. Our surgeons have performed over 400 procedures using the latest ceramic-on-ceramic technology.</p>
+        <a href="#booking" class="service-link">Book consultation →</a>
+      </div>
+
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 3h12l4 6-10 13L2 9z"/></svg>
+        </div>
+        <h3>Sports Injuries</h3>
+        <p>ACL reconstruction, rotator cuff repair, and cartilage regeneration — helping athletes at every level return to peak performance faster and stronger.</p>
+        <a href="#booking" class="service-link">Book consultation →</a>
+      </div>
+
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        </div>
+        <h3>Arthroscopy</h3>
+        <p>Keyhole joint surgery for the knee, shoulder, and ankle — dramatically reducing recovery time while delivering outcomes comparable to open procedures.</p>
+        <a href="#booking" class="service-link">Book consultation →</a>
+      </div>
+
+      <div class="service-card reveal reveal-delay-3">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <h3>Rehabilitation</h3>
+        <p>In-house physiotherapy and guided recovery programs — ensuring every surgical and non-surgical outcome is followed through to full restoration.</p>
+        <a href="#booking" class="service-link">Book consultation →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ STATS ═════════════════════════════════════════════════════ -->
+<section id="stats" class="section">
+  <div class="container stats-inner">
+    <div class="stats-top">
+      <div class="stats-text reveal">
+        <span class="tag">Why Meitar</span>
+        <span class="gold-rule"></span>
+        <h2 style="color:#fff;">Precision That<br>Changes Lives</h2>
+        <p>We combine internationally trained specialists, Israeli medical innovation, and a genuine commitment to patient outcomes — not just procedures.</p>
+        <div class="stats-bullets">
+          <div class="stats-bullet">
+            <div class="stats-bullet-dot"></div>
+            All consultations include imaging review and a clear, pressure-free second opinion option
+          </div>
+          <div class="stats-bullet">
+            <div class="stats-bullet-dot"></div>
+            Average wait time under 72 hours for urgent cases
+          </div>
+          <div class="stats-bullet">
+            <div class="stats-bullet-dot"></div>
+            94% of patients avoid surgery through our conservative treatment pathway
+          </div>
+          <div class="stats-bullet">
+            <div class="stats-bullet-dot"></div>
+            All HMO funds accepted — Maccabi, Clalit, Meuhedet, Leumit
+          </div>
+        </div>
+      </div>
+
+      <div class="stats-image-col reveal reveal-delay-2">
+        <div class="stats-badge-cluster">
+          <div class="badge-center">
+            <div class="big">18</div>
+            <div class="small">Years<br>Operating</div>
+          </div>
+          <div class="badge-orbit badge-tl">
+            <div class="num">94%</div>
+            <div class="lbl">No Surgery<br>Needed</div>
+          </div>
+          <div class="badge-orbit badge-tr">
+            <div class="num">72h</div>
+            <div class="lbl">Max Wait<br>Time</div>
+          </div>
+          <div class="badge-orbit badge-bl">
+            <div class="num">4.9</div>
+            <div class="lbl">Google<br>Rating</div>
+          </div>
+          <div class="badge-orbit badge-br">
+            <div class="num">12</div>
+            <div class="lbl">Specialist<br>Doctors</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats-numbers reveal">
+      <div class="stat-item">
+        <div class="stat-number" data-count="1200">0</div>
+        <div class="stat-label">Annual Procedures</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" data-count="12">0</div>
+        <div class="stat-label">Senior Specialists</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" data-count="98">0%</div>
+        <div class="stat-label">Patient Satisfaction</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" data-count="4">0</div>
+        <div class="stat-label">HMO Funds Accepted</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ DOCTORS ════════════════════════════════════════════════════ -->
+<section id="doctors" class="section">
+  <div class="container">
+    <div class="doctors-header reveal">
+      <span class="tag">Our Team</span>
+      <span class="gold-rule center"></span>
+      <h2>Meet the Specialists</h2>
+      <p style="margin-top:1rem;">Each physician at Meitar holds double-board certification and has trained at leading institutions in Israel, the US, and Europe.</p>
+    </div>
+
+    <div class="doctors-grid">
+      <!-- Doctor 1 -->
+      <div class="doctor-card reveal">
+        <div class="doctor-card-top">
+          <div class="doctor-avatar">EL</div>
+          <div class="doctor-name">Dr. Eyal Levi</div>
+          <div class="doctor-title">Head of Joint Reconstruction</div>
+        </div>
+        <div class="doctor-card-body">
+          <div class="doctor-creds">
+            <div class="doctor-cred">
+              <span class="cred-icon">◆</span>
+              MD, Hebrew University Hadassah School of Medicine
+            </div>
+            <div class="doctor-cred">
+              <span class="cred-icon">◆</span>
+              Fellowship — Hospital for Special Surgery, New York
+            </div>
+            <div class="doctor-cred">
+              <span class="cred-icon">◆</span>
+              Member, Israeli Orthopedic Association
+            </div>
+          </div>
+          <div class="doctor-focus">
+            <span>Specializes in:</span> Total knee & hip arthroplasty, revision surgery, computer-assisted navigation
+          </div>
+        </div>
+      </div>
+
+      <!-- Doctor 2 -->
+      <div class="doctor-card reveal reveal-delay-1">
+        <div class="doctor-card-top">
+          <div class="doctor-avatar">NK</div>
+          <div class="doctor-name">Dr. Noa Katz</div>
+          <div class="doctor-title">Spine & Minimally Invasive Surgery</div>
+        </div>
+        <div class="doctor-card-body">
+          <div class="doctor-creds">
+            <div class="doctor-cred">
+              <span class="cred-icon">◆</span>
+              MD, Tel Aviv University Sackler School of Medicine
+            </div>
+            <div class="doctor-cred">
+              <span class="cred-icon">◆</span>
+              Fellowship — Mayo Clinic, Spine Surgery Division
+            </div>
+            <div class="doctor-cred">
+              <span class="cred-icon">◆</span>
+              American Board of Orthopedic Surgery
+            </div>
+          </div>
+          <div class="doctor-focus">
+            <span>Specializes in:</span> Disc herniation, spinal stenosis, scoliosis correction, robotic-assisted spine surgery
+          </div>
+        </div>
+      </div>
+
+      <!-- Doctor 3 -->
+      <div class="doctor-card reveal reveal-delay-2">
+        <div class="doctor-card-top">
+          <div class="doctor-avatar">AR</div>
+          <div class="doctor-name">Dr. Ariel Rosen</div>
+          <div class="doctor-title">Sports Medicine & Arthroscopy</div>
+        </div>
+        <div class="doctor-card-body">
+          <div class="doctor-creds">
+            <div class="doctor-cred">
+              <span class="cred-icon">◆</span>
+              MD, Technion Ruth & Bruce Rappaport Faculty
+            </div>
+            <div class="doctor-cred">
+              <span class="cred-icon">◆</span>
+              Fellowship — Kerlan-Jobe Orthopaedic Clinic, LA
+            </div>
+            <div class="doctor-cred">
+              <span class="cred-icon">◆</span>
+              Team physician, Israeli National Football Association
+            </div>
+          </div>
+          <div class="doctor-focus">
+            <span>Specializes in:</span> ACL reconstruction, rotator cuff, meniscus repair, cartilage regeneration, PRP therapy
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TESTIMONIALS ══════════════════════════════════════════════ -->
+<section id="testimonials" class="section" style="background:var(--ivory-dark);">
+  <div class="container">
+    <div class="testimonials-header reveal">
+      <span class="tag">Patient Stories</span>
+      <span class="gold-rule center"></span>
+      <h2>Real Outcomes,<br>Real People</h2>
+    </div>
+
+    <div class="testimonials-track">
+      <div class="testimonial-card reveal">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">
+          "After three other opinions, Dr. Levi was the first to explain my condition in a way I actually understood. The knee replacement has given me my life back — I'm hiking the Golan Trail next spring."
+        </p>
+        <div class="testimonial-author">
+          <div class="author-avatar">DM</div>
+          <div>
+            <div class="author-name">David M., 62</div>
+            <div class="author-procedure">Total Knee Replacement · Tel Aviv</div>
+          </div>
+          <div class="testimonial-verified">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L9.09 8.26 2 9.27l5 4.87-1.18 6.88L12 17.77l6.18 3.25L17 14.14l5-4.87-7.09-1.01L12 2z"/></svg>
+            Verified
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card reveal reveal-delay-1">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">
+          "The staff remembered my name from the first call. Dr. Katz performed my lumbar surgery through a 2cm incision. I was walking the next day and back in the office within two weeks."
+        </p>
+        <div class="testimonial-author">
+          <div class="author-avatar">SL</div>
+          <div>
+            <div class="author-name">Shira L., 44</div>
+            <div class="author-procedure">Minimally Invasive Lumbar Surgery · Ramat Gan</div>
+          </div>
+          <div class="testimonial-verified">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L9.09 8.26 2 9.27l5 4.87-1.18 6.88L12 17.77l6.18 3.25L17 14.14l5-4.87-7.09-1.01L12 2z"/></svg>
+            Verified
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card reveal reveal-delay-2">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">
+          "Dr. Rosen treated my ACL tear that ended my season last year. I competed in the Maccabiah Games six months later. The rehab team here is as good as the surgeons."
+        </p>
+        <div class="testimonial-author">
+          <div class="author-avatar">OB</div>
+          <div>
+            <div class="author-name">Omer B., 27</div>
+            <div class="author-procedure">ACL Reconstruction · Herzliya</div>
+          </div>
+          <div class="testimonial-verified">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L9.09 8.26 2 9.27l5 4.87-1.18 6.88L12 17.77l6.18 3.25L17 14.14l5-4.87-7.09-1.01L12 2z"/></svg>
+            Verified
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center; margin-top:3rem;" class="reveal">
+      <p style="margin-bottom:1rem; font-size:.9rem;">Based on 340+ verified patient reviews across Google, Doctoralia, and KupotHolim</p>
+      <div style="display:flex; justify-content:center; gap:.4rem; font-size:1.4rem; color:var(--gold);">★★★★★</div>
+      <div style="font-family:'Bebas Neue',sans-serif; font-size:2rem; color:var(--text); letter-spacing:.05em;">4.9 / 5.0</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PROCESS ════════════════════════════════════════════════════ -->
+<section id="process" class="section">
+  <div class="container">
+    <div class="process-header reveal">
+      <span class="tag" style="color:var(--gold)">How It Works</span>
+      <span class="gold-rule center"></span>
+      <h2>Your Path to<br>Recovery</h2>
+      <p>A clear, supported journey from first contact to full return to life — with our team at every step.</p>
+    </div>
+
+    <div class="process-steps">
+      <div class="process-step reveal">
+        <div class="step-num">1</div>
+        <div class="step-title">Consultation</div>
+        <p class="step-desc">Meet your specialist for a comprehensive evaluation. No rushed appointments — we take time to understand your full history and goals.</p>
+      </div>
+      <div class="process-step reveal reveal-delay-1">
+        <div class="step-num">2</div>
+        <div class="step-title">Diagnosis & Plan</div>
+        <p class="step-desc">Advanced imaging, clear diagnosis, and a personalized treatment plan presented in plain language — always with a conservative-first approach.</p>
+      </div>
+      <div class="process-step reveal reveal-delay-2">
+        <div class="step-num">3</div>
+        <div class="step-title">Treatment</div>
+        <p class="step-desc">Whether physiotherapy, injection therapy, or precision surgery — executed with the latest technology and meticulous attention to your safety.</p>
+      </div>
+      <div class="process-step reveal reveal-delay-3">
+        <div class="step-num">4</div>
+        <div class="step-title">Recovery & Return</div>
+        <p class="step-desc">Structured rehabilitation and regular follow-up until you're fully back to the activities you love — with measurable milestones along the way.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ INSURANCE ══════════════════════════════════════════════════ -->
+<section id="insurance">
+  <div class="container">
+    <div class="insurance-inner">
+      <div class="insurance-label">Accepted Insurance & HMO Funds</div>
+      <div class="insurance-logos">
+        <div class="hmo-badge">
+          <div class="hmo-icon">MC</div>
+          <div class="hmo-name">Maccabi</div>
+        </div>
+        <div class="hmo-badge">
+          <div class="hmo-icon">CL</div>
+          <div class="hmo-name">Clalit</div>
+        </div>
+        <div class="hmo-badge">
+          <div class="hmo-icon">MH</div>
+          <div class="hmo-name">Meuhedet</div>
+        </div>
+        <div class="hmo-badge">
+          <div class="hmo-icon">LE</div>
+          <div class="hmo-name">Leumit</div>
+        </div>
+        <div class="hmo-badge">
+          <div class="hmo-icon">PV</div>
+          <div class="hmo-name">Private</div>
+        </div>
+        <div class="hmo-badge">
+          <div class="hmo-icon">IN</div>
+          <div class="hmo-name">International</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FAQ ════════════════════════════════════════════════════════ -->
+<section id="faq" class="section">
+  <div class="container">
+    <div class="faq-inner">
+      <div class="faq-sidebar reveal">
+        <span class="tag">Common Questions</span>
+        <span class="gold-rule"></span>
+        <h2>We Answer Before You Have to Ask</h2>
+        <p>Transparency is part of our care. Here are the questions every patient asks first.</p>
+        <div class="faq-contact-box">
+          <p>Can't find your answer?</p>
+          <strong>Call or WhatsApp us directly</strong>
+          <a href="tel:+97236001234" class="btn btn-gold btn-full" style="margin-bottom:.6rem; font-size:.88rem;">
+            03-600-1234
+          </a>
+          <a href="https://wa.me/97236001234" class="btn" style="background:#25d366; color:#fff; font-size:.88rem; width:100%; justify-content:center;">
+            WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <div class="faq-list reveal reveal-delay-1">
+        <div class="faq-item open">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            Does my Kupat Holim (HMO) cover treatment here?
+            <div class="faq-arrow">▾</div>
+          </div>
+          <div class="faq-a">
+            Yes — we work with all four major HMO funds: Maccabi, Clalit, Meuhedet, and Leumit. Most consultations and many procedures are fully covered under your standard kupat holim benefits. Our billing team will clarify your exact coverage before any treatment is agreed upon.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            How quickly can I get an appointment?
+            <div class="faq-arrow">▾</div>
+          </div>
+          <div class="faq-a">
+            For routine consultations, we typically have availability within 3–5 business days. For urgent cases (acute injury, significant functional limitation), we prioritize same-day or next-day appointments. Call or WhatsApp us and we will find you a slot as quickly as possible.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            Do I need a referral from my family doctor?
+            <div class="faq-arrow">▾</div>
+          </div>
+          <div class="faq-a">
+            A referral may be required depending on your HMO and the type of treatment. However, you are welcome to book a self-pay consultation at any time without a referral. Our administrative team will guide you through what's needed based on your specific fund and coverage.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            What should I bring to my first appointment?
+            <div class="faq-arrow">▾</div>
+          </div>
+          <div class="faq-a">
+            Please bring your Israeli ID (teudat zehut), HMO membership card, any existing imaging (X-rays, MRI, CT scans), previous specialist reports, and a list of current medications. If you have prior surgical records, those are very helpful. Don't worry if you don't have everything — we can work with what you have.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            What is your approach to surgery versus conservative treatment?
+            <div class="faq-arrow">▾</div>
+          </div>
+          <div class="faq-a">
+            Our philosophy is always conservative-first. Across all specialties, 94% of our patients achieve their outcomes without surgery through physical therapy, injection therapy, medication management, and guided lifestyle changes. Surgery is recommended only when it is clearly the best option — and we will always explain why in plain terms before any decision is made.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            Is parking available at the clinic?
+            <div class="faq-arrow">▾</div>
+          </div>
+          <div class="faq-a">
+            Yes, the clinic has a private parking lot with 40 spaces, free for patients during appointments. We are also served by the Tel Aviv light rail (Ibn Gavirol stop, 3-minute walk) and multiple bus lines. Accessibility parking and wheelchair access are fully available at all entrances.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ BOOKING / CTA ══════════════════════════════════════════════ -->
+<section id="booking" class="section">
+  <div class="container">
+    <div class="booking-inner">
+      <div class="booking-text reveal">
+        <span class="tag">Book Your Visit</span>
+        <span class="gold-rule"></span>
+        <h2 style="color:#fff;">Start Your<br>Recovery Today</h2>
+        <p>A 30-minute consultation with one of our specialists is all it takes to get clarity, a diagnosis, and a clear path forward.</p>
+
+        <div class="booking-trust-list">
+          <div class="booking-trust-item">
+            <div class="btl-check">✓</div>
+            No pressure — conservative treatment always explored first
+          </div>
+          <div class="booking-trust-item">
+            <div class="btl-check">✓</div>
+            All HMO funds and private insurance accepted
+          </div>
+          <div class="booking-trust-item">
+            <div class="btl-check">✓</div>
+            Results and imaging reviewed same-day
+          </div>
+          <div class="booking-trust-item">
+            <div class="btl-check">✓</div>
+            English, Hebrew, and Russian spoken
+          </div>
+        </div>
+
+        <div class="booking-contact">
+          <a href="tel:+97236001234" class="contact-chip">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.09 1.18 2 2 0 012.06 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            03-600-1234
+          </a>
+          <a href="https://wa.me/97236001234" class="contact-chip" style="color:#4ade80; border-color:rgba(74,222,128,.2);">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            WhatsApp
+          </a>
+          <a href="mailto:appointments@meitar-ortho.co.il" class="contact-chip">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Email
+          </a>
+        </div>
+      </div>
+
+      <div class="booking-form reveal reveal-delay-2">
+        <h3>Request an Appointment</h3>
+        <p>We'll confirm your slot within 2 business hours.</p>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" placeholder="Yossi">
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" placeholder="Cohen">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Phone</label>
+            <input type="tel" placeholder="050-000-0000">
+          </div>
+          <div class="form-group">
+            <label>HMO Fund</label>
+            <select>
+              <option value="">Select…</option>
+              <option>Maccabi</option>
+              <option>Clalit</option>
+              <option>Meuhedet</option>
+              <option>Leumit</option>
+              <option>Private / International</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Area of Concern</label>
+          <select>
+            <option value="">Select…</option>
+            <option>Knee Pain / Injury</option>
+            <option>Hip Pain / Replacement</option>
+            <option>Back / Spine</option>
+            <option>Shoulder / Rotator Cuff</option>
+            <option>Sports Injury</option>
+            <option>Ankle / Foot</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Brief Description (optional)</label>
+          <textarea placeholder="Describe your pain, how long you've had it, or any previous treatments…"></textarea>
+        </div>
+
+        <div class="form-submit-row">
+          <button class="btn btn-gold btn-full" type="button" onclick="submitForm(this)">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Request Appointment
+          </button>
+        </div>
+        <div class="form-note" style="margin-top:.75rem; text-align:center;">
+          By submitting, you agree to our privacy policy. Your information is never shared with third parties.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ═════════════════════════════════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="nav-logo">
+          <div class="nav-logo-mark">M</div>
+          <div class="nav-logo-text" style="font-size:1.25rem;">
+            Meitar Orthopedics
+            <span>מרכז מיתר לאורתופדיה</span>
+          </div>
+        </div>
+        <p>18 Nahalat Binyamin St., Tel Aviv · Mon–Thu 8:00–19:00 · Fri 8:00–14:00</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#services">Spine & Back</a></li>
+          <li><a href="#services">Knee Replacement</a></li>
+          <li><a href="#services">Hip Reconstruction</a></li>
+          <li><a href="#services">Sports Injuries</a></li>
+          <li><a href="#services">Arthroscopy</a></li>
+          <li><a href="#services">Rehabilitation</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Clinic</h4>
+        <ul>
+          <li><a href="#doctors">Our Doctors</a></li>
+          <li><a href="#testimonials">Patient Stories</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#insurance">Insurance</a></li>
+          <li><a href="#booking">Book Online</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:+97236001234">03-600-1234</a></li>
+          <li><a href="https://wa.me/97236001234">WhatsApp</a></li>
+          <li><a href="mailto:info@meitar-ortho.co.il">Email Us</a></li>
+          <li><a href="#">Get Directions</a></li>
+          <li><a href="#">Emergency Line</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>© 2025 Meitar Orthopedics. All rights reserved.</div>
+      <div class="footer-moh">
+        <div class="moh-badge">MOH</div>
+        Licensed by the Israeli Ministry of Health · License No. 4-5821
+      </div>
+      <div style="display:flex; gap:1.5rem;">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+        <a href="#">Accessibility</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ══ WHATSAPP FLOAT ══════════════════════════════════════════════ -->
+<a href="https://wa.me/97236001234" class="wa-float" target="_blank" rel="noopener">
+  <svg viewBox="0 0 24 24" fill="currentColor">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+  <span class="wa-label">Chat with us</span>
+</a>
+
+<!-- ══ SCRIPTS ════════════════════════════════════════════════════ -->
+<script>
+/* ── Sticky nav ───────────────────────────────────────────────── */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+/* ── Hamburger menu ───────────────────────────────────────────── */
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+
+hamburger.addEventListener('click', () => {
+  mobileMenu.classList.toggle('open');
+});
+
+function closeMobileMenu() {
+  mobileMenu.classList.remove('open');
+}
+
+/* ── Scroll reveal (Intersection Observer) ────────────────────── */
+const revealEls = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+
+revealEls.forEach(el => revealObserver.observe(el));
+
+/* ── Counter animation ────────────────────────────────────────── */
+function animateCounter(el, target, suffix = '') {
+  const duration = 1800;
+  const step = 16;
+  const increment = target / (duration / step);
+  let current = 0;
+  const timer = setInterval(() => {
+    current = Math.min(current + increment, target);
+    el.textContent = Math.floor(current).toLocaleString() + suffix;
+    if (current >= target) clearInterval(timer);
+  }, step);
+}
+
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const el = entry.target;
+    const count = parseInt(el.dataset.count);
+    const suffix = el.textContent.includes('%') ? '%' : (el.textContent.includes('+') ? '+' : '');
+    if (!isNaN(count)) animateCounter(el, count, suffix);
+    counterObserver.unobserve(el);
+  });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('[data-count]').forEach(el => counterObserver.observe(el));
+
+/* ── Stat number counters (stats section) ─────────────────────── */
+const statNumbers = document.querySelectorAll('.stat-number[data-count]');
+const statObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const el = entry.target;
+    const target = parseInt(el.dataset.count);
+    const suffix = el.textContent.includes('%') ? '%' : '';
+    if (!isNaN(target)) animateCounter(el, target, suffix);
+    statObserver.unobserve(el);
+  });
+}, { threshold: 0.5 });
+
+statNumbers.forEach(el => statObserver.observe(el));
+
+/* ── FAQ accordion ────────────────────────────────────────────── */
+function toggleFaq(questionEl) {
+  const item = questionEl.parentElement;
+  const isOpen = item.classList.contains('open');
+  // Close all
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  // Open clicked (if it was closed)
+  if (!isOpen) item.classList.add('open');
+}
+
+/* ── Form submit ──────────────────────────────────────────────── */
+function submitForm(btn) {
+  const original = btn.innerHTML;
+  btn.innerHTML = '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Appointment Requested!';
+  btn.style.background = '#4ade80';
+  btn.style.color = '#0D1B2A';
+  btn.disabled = true;
+  setTimeout(() => {
+    btn.innerHTML = original;
+    btn.style.background = '';
+    btn.style.color = '';
+    btn.disabled = false;
+  }, 4000);
+}
+
+/* ── Smooth anchor scroll with nav offset ─────────────────────── */
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+  link.addEventListener('click', e => {
+    const target = document.querySelector(link.getAttribute('href'));
+    if (!target) return;
+    e.preventDefault();
+    const offset = 80;
+    const top = target.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top, behavior: 'smooth' });
+  });
+});
+</script>
+</body>
+</html>

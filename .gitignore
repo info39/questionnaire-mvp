@@ -1,0 +1,27 @@
+# Node / dependencies
+node_modules/
+
+# Environment / secrets
+.env
+.env.local
+
+# Logs
+*.log
+
+# Build folders
+dist/
+build/
+
+# Mac / system
+.DS_Store
+
+# IDE
+.vscode/
+
+# Temp files
+tmp/
+temp/
+
+# Optional - אם יש קובץ כזה
+config.local.js
+secrets.json
