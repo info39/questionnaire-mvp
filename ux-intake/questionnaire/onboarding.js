@@ -829,7 +829,12 @@
     var submitBtn = root.querySelector('.uob-submit-btn');
     if (submitBtn) {
       submitBtn.addEventListener('click', function () {
-        self._submitToWordPress(submitBtn);
+        var useEmailJS = window.uxOnboardingConfig && window.uxOnboardingConfig.useEmailJS;
+        if (useEmailJS) {
+          self._submitViaEmailJS(submitBtn);
+        } else {
+          self._submitToWordPress(submitBtn);
+        }
       });
     }
 
@@ -936,13 +941,68 @@
       body:    JSON.stringify(payload)
     })
     .then(function (res) {
-      // Make returns 200 with {"accepted":1} — any 2xx is a success
       if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.text();
+    })
+    .then(function (body) {
+      // Make returns {"accepted":1} on success; log the body for debugging
+      console.log('[ux-onboarding] Webhook response:', body);
+      var parsed = null;
+      try { parsed = JSON.parse(body); } catch (e) { /* non-JSON response is fine */ }
+      // If Make explicitly returns accepted:0, treat as failure
+      if (parsed && parsed.accepted === 0) {
+        throw new Error('Webhook rejected: ' + body);
+      }
       btn.style.display = 'none';
       self._showSubmitFeedback(true);
     })
     .catch(function (err) {
       console.error('[ux-onboarding] Submission failed:', err);
+      btn.disabled    = false;
+      btn.textContent = 'Try again';
+      self._showSubmitFeedback(false);
+    });
+  };
+
+  // ─── EmailJS fallback (alternative to Make webhook) ─────────────────────
+  // Use this if the Make webhook is unavailable.
+  // Prerequisites:
+  //   1. Sign up at https://www.emailjs.com (free tier: 200 emails/month)
+  //   2. Connect your email service (Gmail, SMTP, etc.)
+  //   3. Create a template — use variables: {{answers_text}}, {{profile_text}},
+  //      {{client_email}}, {{mode_label}}, {{site_url}}, {{completed_at}}
+  //   4. Set window.uxOnboardingConfig = { useEmailJS: true, emailJSServiceId: '...',
+  //      emailJSTemplateId: '...', emailJSPublicKey: '...', recipientEmail: 'you@example.com' }
+  OnboardingEngine.prototype._submitViaEmailJS = function (btn) {
+    var self    = this;
+    var cfg     = window.uxOnboardingConfig || {};
+    var state   = this._state;
+
+    if (typeof emailjs === 'undefined') {
+      console.error('[ux-onboarding] EmailJS not loaded. Add the SDK script tag before this widget.');
+      self._showSubmitFeedback(false);
+      return;
+    }
+
+    btn.disabled    = true;
+    btn.textContent = 'Sending\u2026';
+
+    emailjs.init(cfg.emailJSPublicKey);
+    emailjs.send(cfg.emailJSServiceId, cfg.emailJSTemplateId, {
+      to_email:      cfg.recipientEmail,
+      client_email:  (state.answers['client_email'] || '').trim(),
+      mode_label:    state.mode === 'B' ? 'Deep Dive' : 'Quick Mode',
+      completed_at:  new Date().toISOString(),
+      site_url:      window.location.href,
+      profile_text:  self._buildProfileText(),
+      answers_text:  self._buildAnswersText()
+    })
+    .then(function () {
+      btn.style.display = 'none';
+      self._showSubmitFeedback(true);
+    })
+    .catch(function (err) {
+      console.error('[ux-onboarding] EmailJS failed:', err);
       btn.disabled    = false;
       btn.textContent = 'Try again';
       self._showSubmitFeedback(false);
@@ -1090,5 +1150,8 @@
   } else {
     autoInit(10);
   }
+
+  // Expose constructor globally for dynamic page injection
+  window.OnboardingEngine = OnboardingEngine;
 
 })();

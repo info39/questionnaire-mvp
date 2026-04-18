@@ -1,10 +1,12 @@
 /* =============================================================================
-   UX Onboarding Component
-   Scoped entirely under .ux-onboarding-app
-   Supports RTL (dir="rtl" on the root), responsive layout, no Elementor deps
+   UX Onboarding Component — Premium Edition
+   Scoped under .ux-onboarding-app | RTL ready | GSAP-compatible
+   Font: Heebo (Google Fonts — load in HTML head)
 ============================================================================= */
 
-/* ── Reset (scoped) ──────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap');
+
+/* ── Scoped Reset ────────────────────────────────────────────────────────── */
 .ux-onboarding-app *,
 .ux-onboarding-app *::before,
 .ux-onboarding-app *::after {
@@ -13,27 +15,39 @@
   padding: 0;
 }
 
-/* ── Root container ──────────────────────────────────────────────────────── */
+/* ── Design Tokens ───────────────────────────────────────────────────────── */
 .ux-onboarding-app {
-  --uob-accent:        #2563eb;
-  --uob-accent-hover:  #1d4ed8;
-  --uob-accent-light:  #eff6ff;
-  --uob-bg:            #ffffff;
-  --uob-surface:       #f8fafc;
-  --uob-border:        #e2e8f0;
-  --uob-text:          #1e293b;
-  --uob-text-muted:    #64748b;
-  --uob-text-light:    #94a3b8;
-  --uob-success:       #16a34a;
-  --uob-warning:       #d97706;
-  --uob-danger:        #dc2626;
-  --uob-radius:        10px;
-  --uob-radius-sm:     6px;
-  --uob-shadow:        0 1px 3px 0 rgb(0 0 0 / .10), 0 1px 2px -1px rgb(0 0 0 / .10);
-  --uob-shadow-md:     0 4px 6px -1px rgb(0 0 0 / .10), 0 2px 4px -2px rgb(0 0 0 / .10);
-  --uob-font:          -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --uob-sidebar-w:     240px;
-  --uob-transition:    150ms ease;
+  --uob-accent:           #2563eb;
+  --uob-accent-hover:     #1d4ed8;
+  --uob-accent-light:     #eff6ff;
+  --uob-accent-2:         #6366f1;
+  --uob-gradient:         linear-gradient(135deg, #2563eb 0%, #6366f1 100%);
+  --uob-bg:               #ffffff;
+  --uob-surface:          #f8fafc;
+  --uob-sidebar-bg:       #0f172a;
+  --uob-sidebar-surface:  #1e293b;
+  --uob-sidebar-border:   rgba(255,255,255,.07);
+  --uob-border:           #e2e8f0;
+  --uob-text:             #0f172a;
+  --uob-text-muted:       #64748b;
+  --uob-text-light:       #94a3b8;
+  --uob-success:          #10b981;
+  --uob-warning:          #f59e0b;
+  --uob-danger:           #ef4444;
+  --uob-radius:           16px;
+  --uob-radius-sm:        10px;
+  --uob-radius-xs:        6px;
+  --uob-shadow-xs:        0 1px 2px rgb(0 0 0 / .06);
+  --uob-shadow:           0 2px 8px rgb(0 0 0 / .07), 0 1px 2px rgb(0 0 0 / .05);
+  --uob-shadow-md:        0 8px 24px rgb(0 0 0 / .10), 0 2px 6px rgb(0 0 0 / .06);
+  --uob-shadow-lg:        0 20px 48px rgb(0 0 0 / .14), 0 6px 16px rgb(0 0 0 / .08);
+  --uob-shadow-accent:    0 8px 24px rgb(37 99 235 / .30);
+  --uob-font:             'Heebo', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --uob-sidebar-w:        260px;
+  --uob-ease:             cubic-bezier(.4, 0, .2, 1);
+  --uob-ease-spring:      cubic-bezier(.34, 1.56, .64, 1);
+  --uob-transition:       250ms var(--uob-ease);
+  --uob-transition-slow:  400ms var(--uob-ease);
 
   font-family:   var(--uob-font);
   font-size:     16px;
@@ -42,164 +56,218 @@
   background:    var(--uob-bg);
   border-radius: var(--uob-radius);
   overflow:      hidden;
-  min-height:    480px;
+  min-height:    520px;
+  position:      relative;
 }
 
-/* RTL support */
+/* RTL */
 .ux-onboarding-app[dir="rtl"],
-[dir="rtl"] .ux-onboarding-app {
-  direction: rtl;
-}
+[dir="rtl"] .ux-onboarding-app { direction: rtl; }
 
-/* ── Layout (sidebar + main) ─────────────────────────────────────────────── */
+/* ── Layout ──────────────────────────────────────────────────────────────── */
 .uob-layout {
   display:     flex;
-  min-height:  480px;
+  min-height:  520px;
   align-items: stretch;
 }
 
-/* ── Sidebar ─────────────────────────────────────────────────────────────── */
+/* ── Sidebar — Dark Premium ──────────────────────────────────────────────── */
 .uob-sidebar {
   width:          var(--uob-sidebar-w);
   flex-shrink:    0;
-  background:     var(--uob-surface);
-  border-inline-end: 1px solid var(--uob-border);
-  padding:        24px 20px;
+  background:     var(--uob-sidebar-bg);
+  border-inline-end: none;
+  padding:        28px 20px;
   display:        flex;
   flex-direction: column;
-  gap:            16px;
+  gap:            20px;
+  position:       relative;
+  overflow:       hidden;
 }
 
+/* Subtle ambient glow in sidebar top */
+.uob-sidebar::before {
+  content:  '';
+  position: absolute;
+  top:      -60px;
+  inset-inline-start: -40px;
+  width:    220px;
+  height:   220px;
+  background: radial-gradient(circle, rgba(99,102,241,.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Progress track */
 .uob-sidebar__progress {
-  height:           4px;
-  background:       var(--uob-border);
-  border-radius:    2px;
-  overflow:         hidden;
+  height:        5px;
+  background:    rgba(255,255,255,.10);
+  border-radius: 3px;
+  overflow:      hidden;
+  position:      relative;
 }
 
 .uob-sidebar__progress-bar {
-  height:           100%;
-  background:       var(--uob-accent);
-  border-radius:    2px;
-  transition:       width 400ms ease;
+  height:     100%;
+  background: var(--uob-gradient);
+  border-radius: 3px;
+  transition: width 600ms var(--uob-ease);
+  position:   relative;
+}
+
+/* Shimmer on progress bar */
+.uob-sidebar__progress-bar::after {
+  content:    '';
+  position:   absolute;
+  top:        0; left: -100%;
+  width:      60%;
+  height:     100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.4), transparent);
+  animation:  uob-shimmer 2.4s ease-in-out infinite;
+}
+
+@keyframes uob-shimmer {
+  0%   { left: -60%; }
+  100% { left: 160%; }
 }
 
 .uob-sidebar__remaining {
-  font-size:   12px;
-  color:       var(--uob-text-muted);
-  font-weight: 500;
+  font-size:   11px;
+  font-weight: 600;
+  color:       rgba(255,255,255,.35);
+  letter-spacing: .06em;
+  text-transform: uppercase;
 }
 
+/* Chapter list */
 .uob-chapter-list {
-  list-style: none;
-  display:    flex;
+  list-style:     none;
+  display:        flex;
   flex-direction: column;
-  gap:        4px;
+  gap:            3px;
 }
 
 .uob-chapter {
   display:        flex;
   align-items:    center;
-  gap:            10px;
-  padding:        8px 10px;
+  gap:            12px;
+  padding:        9px 12px;
   border-radius:  var(--uob-radius-sm);
   font-size:      13px;
-  color:          var(--uob-text-muted);
-  transition:     background var(--uob-transition), color var(--uob-transition);
+  font-weight:    500;
+  color:          rgba(255,255,255,.38);
+  transition:     background var(--uob-transition),
+                  color    var(--uob-transition),
+                  transform var(--uob-transition);
   cursor:         default;
 }
 
 .uob-chapter--active {
-  background: var(--uob-accent-light);
-  color:      var(--uob-accent);
-  font-weight: 600;
+  background: rgba(99,102,241,.18);
+  color:      #fff;
+  font-weight: 700;
 }
 
-.uob-chapter--complete .uob-chapter__indicator {
-  background:    var(--uob-success);
-  border-color:  var(--uob-success);
+.uob-chapter--complete {
+  color: rgba(255,255,255,.55);
 }
 
 .uob-chapter__indicator {
-  width:         10px;
-  height:        10px;
+  width:         9px;
+  height:        9px;
   border-radius: 50%;
-  border:        2px solid var(--uob-border);
+  border:        2px solid rgba(255,255,255,.20);
   flex-shrink:   0;
-  transition:    background var(--uob-transition), border-color var(--uob-transition);
+  transition:    all var(--uob-transition);
+  position:      relative;
 }
 
 .uob-chapter--active .uob-chapter__indicator {
-  border-color: var(--uob-accent);
-  background:   var(--uob-accent);
+  border-color: #6366f1;
+  background:   #6366f1;
+  box-shadow:   0 0 0 3px rgba(99,102,241,.25);
+}
+
+.uob-chapter--complete .uob-chapter__indicator {
+  background:   var(--uob-success);
+  border-color: var(--uob-success);
 }
 
 .uob-chapter__title {
-  flex: 1;
+  flex:        1;
   white-space: nowrap;
   overflow:    hidden;
   text-overflow: ellipsis;
 }
 
 .uob-chapter__count {
-  font-size: 11px;
-  color:     var(--uob-text-light);
+  font-size:  11px;
+  color:      rgba(255,255,255,.22);
   flex-shrink: 0;
 }
 
-/* ── Main content area ───────────────────────────────────────────────────── */
+/* ── Main Content ────────────────────────────────────────────────────────── */
 .uob-main {
-  flex:       1;
-  padding:    40px 48px;
-  display:    flex;
+  flex:        1;
+  padding:     48px 52px;
+  display:     flex;
   align-items: flex-start;
-  overflow-y: auto;
+  overflow-y:  auto;
+  background:  var(--uob-bg);
 }
 
+/* ── Step ────────────────────────────────────────────────────────────────── */
 .uob-step {
-  width:      100%;
-  max-width:  600px;
-  display:    flex;
+  width:          100%;
+  max-width:      600px;
+  display:        flex;
   flex-direction: column;
-  gap:        24px;
-  animation:  uob-fade-in 200ms ease;
+  gap:            28px;
+  /* GSAP controls entrance — CSS provides fallback */
+  animation: uob-step-in 360ms var(--uob-ease) both;
 }
 
-@keyframes uob-fade-in {
-  from { opacity: 0; transform: translateY(6px); }
+@keyframes uob-step-in {
+  from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
 /* ── Chapter label ───────────────────────────────────────────────────────── */
 .uob-chapter-label {
-  font-size:    11px;
-  font-weight:  700;
+  display:        inline-flex;
+  align-items:    center;
+  gap:            6px;
+  font-size:      11px;
+  font-weight:    700;
   text-transform: uppercase;
-  letter-spacing: .08em;
-  color:        var(--uob-accent);
+  letter-spacing: .10em;
+  color:          var(--uob-accent-2);
+  background:     rgba(99,102,241,.08);
+  padding:        4px 10px;
+  border-radius:  20px;
 }
 
-/* ── Question text ───────────────────────────────────────────────────────── */
+/* ── Question ────────────────────────────────────────────────────────────── */
 .uob-question {
-  font-size:   22px;
-  font-weight: 700;
-  line-height: 1.3;
+  font-size:   24px;
+  font-weight: 800;
+  line-height: 1.28;
   color:       var(--uob-text);
+  letter-spacing: -.01em;
 }
 
-/* ── Response bubble (dynamic reply) ─────────────────────────────────────── */
+/* ── Response bubble ─────────────────────────────────────────────────────── */
 .uob-response-bubble {
-  background:    var(--uob-accent-light);
+  background:    linear-gradient(135deg, var(--uob-accent-light), rgba(99,102,241,.06));
   border-inline-start: 3px solid var(--uob-accent);
-  padding:       12px 16px;
+  padding:       14px 18px;
   border-radius: 0 var(--uob-radius-sm) var(--uob-radius-sm) 0;
   font-size:     14px;
   color:         var(--uob-accent);
   font-style:    italic;
-  animation:     uob-fade-in 200ms ease;
+  font-weight:   500;
+  animation:     uob-step-in 240ms var(--uob-ease) both;
 }
 
-/* RTL: flip border side */
 [dir="rtl"] .uob-response-bubble,
 .ux-onboarding-app[dir="rtl"] .uob-response-bubble {
   border-inline-start: none;
@@ -209,94 +277,142 @@
 
 /* ── Input area ──────────────────────────────────────────────────────────── */
 .uob-input-area {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-/* ── Options (radio / checkbox) ──────────────────────────────────────────── */
-.uob-options {
   display:        flex;
   flex-direction: column;
-  gap:            8px;
+  gap:            10px;
+}
+
+/* ── Options — 3D Card Style ─────────────────────────────────────────────── */
+.uob-options {
+  display:           flex;
+  flex-direction:    column;
+  gap:               8px;
+  perspective:       800px;
+  perspective-origin: 50% 50%;
 }
 
 .uob-option {
-  display:        flex;
-  align-items:    center;
-  gap:            12px;
-  padding:        14px 18px;
-  border:         1.5px solid var(--uob-border);
-  border-radius:  var(--uob-radius);
-  cursor:         pointer;
-  transition:     border-color var(--uob-transition),
-                  background   var(--uob-transition),
-                  box-shadow   var(--uob-transition);
-  user-select:    none;
+  display:           flex;
+  align-items:       center;
+  gap:               14px;
+  padding:           16px 20px;
+  border:            1.5px solid var(--uob-border);
+  border-radius:     var(--uob-radius-sm);
+  cursor:            pointer;
+  background:        var(--uob-bg);
+  transition:        border-color var(--uob-transition),
+                     background   var(--uob-transition),
+                     box-shadow   var(--uob-transition),
+                     transform    300ms var(--uob-ease-spring);
+  user-select:       none;
+  position:          relative;
+  overflow:          hidden;
+  transform-style:   preserve-3d;
+  will-change:       transform;
+}
+
+/* Shimmer overlay on hover */
+.uob-option::before {
+  content:    '';
+  position:   absolute;
+  inset:      0;
+  background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,.55) 50%, transparent 60%);
+  opacity:    0;
+  transition: opacity 200ms;
+  pointer-events: none;
 }
 
 .uob-option:hover {
   border-color: var(--uob-accent);
   background:   var(--uob-accent-light);
+  box-shadow:   var(--uob-shadow-md);
+  transform:    translateY(-2px) translateZ(6px);
+}
+
+.uob-option:hover::before {
+  opacity: 1;
+  animation: uob-option-shimmer 600ms ease;
+}
+
+@keyframes uob-option-shimmer {
+  from { background-position: -200% center; }
+  to   { background-position:  200% center; }
+}
+
+.uob-option:active {
+  transform: translateY(0) scale(.98);
+  transition-duration: 80ms;
 }
 
 .uob-option--selected {
   border-color: var(--uob-accent);
   background:   var(--uob-accent-light);
-  box-shadow:   0 0 0 3px rgb(37 99 235 / .12);
+  box-shadow:   0 0 0 3px rgba(37,99,235,.15), var(--uob-shadow);
+  transform:    translateY(-1px);
 }
 
 .uob-option input[type="radio"],
 .uob-option input[type="checkbox"] {
-  width:        18px;
-  height:       18px;
-  accent-color: var(--uob-accent);
-  flex-shrink:  0;
-  cursor:       pointer;
+  width:         18px;
+  height:        18px;
+  accent-color:  var(--uob-accent);
+  flex-shrink:   0;
+  cursor:        pointer;
 }
 
 .uob-option__label {
-  font-size:  15px;
+  font-size:   15px;
   font-weight: 500;
   color:       var(--uob-text);
   line-height: 1.4;
 }
 
-/* ── Textarea ────────────────────────────────────────────────────────────── */
+.uob-option--selected .uob-option__label {
+  color:       var(--uob-accent);
+  font-weight: 600;
+}
+
+/* ── Textarea / Input ────────────────────────────────────────────────────── */
 .uob-textarea,
 .uob-input {
   width:         100%;
-  padding:       14px 16px;
+  padding:       16px 18px;
   border:        1.5px solid var(--uob-border);
-  border-radius: var(--uob-radius);
+  border-radius: var(--uob-radius-sm);
   font-family:   var(--uob-font);
   font-size:     15px;
+  font-weight:   500;
   color:         var(--uob-text);
   background:    var(--uob-bg);
   resize:        vertical;
-  transition:    border-color var(--uob-transition), box-shadow var(--uob-transition);
+  transition:    border-color var(--uob-transition),
+                 box-shadow   var(--uob-transition),
+                 background   var(--uob-transition);
   outline:       none;
+  line-height:   1.6;
 }
 
 .uob-textarea:focus,
 .uob-input:focus {
   border-color: var(--uob-accent);
-  box-shadow:   0 0 0 3px rgb(37 99 235 / .12);
+  background:   var(--uob-accent-light);
+  box-shadow:   0 0 0 4px rgba(37,99,235,.10);
 }
 
 .uob-textarea::placeholder,
-.uob-input::placeholder {
-  color: var(--uob-text-light);
-}
+.uob-input::placeholder { color: var(--uob-text-light); }
 
 /* ── Validation error ────────────────────────────────────────────────────── */
 .uob-validation-error {
-  font-size:  13px;
-  color:      var(--uob-danger);
-  font-weight: 500;
+  font-size:   13px;
+  font-weight: 600;
+  color:       var(--uob-danger);
+  display:     flex;
+  align-items: center;
+  gap:         5px;
 }
 
-/* ── Actions bar ─────────────────────────────────────────────────────────── */
+/* ── Actions ─────────────────────────────────────────────────────────────── */
 .uob-actions {
   display:     flex;
   align-items: center;
@@ -306,194 +422,217 @@
 
 /* ── Buttons ─────────────────────────────────────────────────────────────── */
 .uob-btn {
-  display:        inline-flex;
-  align-items:    center;
+  display:         inline-flex;
+  align-items:     center;
   justify-content: center;
-  padding:        10px 22px;
-  border-radius:  var(--uob-radius-sm);
-  font-family:    var(--uob-font);
-  font-size:      14px;
-  font-weight:    600;
-  cursor:         pointer;
-  border:         1.5px solid transparent;
-  transition:     background   var(--uob-transition),
-                  border-color var(--uob-transition),
-                  color        var(--uob-transition),
-                  box-shadow   var(--uob-transition);
-  white-space: nowrap;
+  gap:             6px;
+  padding:         11px 26px;
+  border-radius:   var(--uob-radius-sm);
+  font-family:     var(--uob-font);
+  font-size:       14px;
+  font-weight:     700;
+  cursor:          pointer;
+  border:          1.5px solid transparent;
+  transition:      background    var(--uob-transition),
+                   border-color  var(--uob-transition),
+                   color         var(--uob-transition),
+                   box-shadow    var(--uob-transition),
+                   transform     200ms var(--uob-ease-spring);
+  white-space:     nowrap;
+  position:        relative;
+  overflow:        hidden;
 }
 
+.uob-btn:active { transform: scale(.96); }
+
+/* Primary — gradient */
 .uob-btn--primary {
-  background:  var(--uob-accent);
-  color:       #fff;
-  border-color: var(--uob-accent);
+  background:   var(--uob-gradient);
+  color:        #fff;
+  border-color: transparent;
+  box-shadow:   var(--uob-shadow-accent);
 }
 
 .uob-btn--primary:hover {
-  background:  var(--uob-accent-hover);
-  border-color: var(--uob-accent-hover);
+  box-shadow:   0 12px 32px rgba(37,99,235,.40);
+  transform:    translateY(-1px);
 }
 
+/* Secondary */
 .uob-btn--secondary {
-  background:  transparent;
-  color:       var(--uob-accent);
+  background:   transparent;
+  color:        var(--uob-accent);
   border-color: var(--uob-accent);
 }
 
 .uob-btn--secondary:hover {
-  background: var(--uob-accent-light);
+  background:  var(--uob-accent-light);
+  box-shadow:  var(--uob-shadow);
+  transform:   translateY(-1px);
 }
 
+/* Ghost */
 .uob-btn--ghost {
-  background:  transparent;
-  color:       var(--uob-text-muted);
+  background:   transparent;
+  color:        var(--uob-text-muted);
   border-color: var(--uob-border);
 }
 
 .uob-btn--ghost:hover {
   background:  var(--uob-surface);
   color:       var(--uob-text);
+  transform:   translateY(-1px);
 }
 
 /* ── Intro screen ────────────────────────────────────────────────────────── */
 .uob-intro {
-  display:        flex;
-  align-items:    center;
+  display:         flex;
+  align-items:     center;
   justify-content: center;
-  min-height:     480px;
-  padding:        48px 40px;
+  min-height:      520px;
+  padding:         56px 48px;
+  position:        relative;
+  background:      radial-gradient(ellipse 80% 60% at 50% -10%, rgba(99,102,241,.07) 0%, transparent 70%);
 }
 
 .uob-intro__content {
-  max-width:      520px;
+  max-width:      540px;
   display:        flex;
   flex-direction: column;
-  gap:            24px;
+  gap:            28px;
   text-align:     center;
+  position:       relative;
+  z-index:        1;
 }
 
 [dir="rtl"] .uob-intro__content,
-.ux-onboarding-app[dir="rtl"] .uob-intro__content {
-  text-align: right;
-}
+.ux-onboarding-app[dir="rtl"] .uob-intro__content { text-align: right; }
 
 .uob-intro__heading {
-  font-size:   28px;
-  font-weight: 800;
-  line-height: 1.25;
-  color:       var(--uob-text);
+  font-size:      32px;
+  font-weight:    900;
+  line-height:    1.2;
+  color:          var(--uob-text);
+  letter-spacing: -.02em;
 }
 
 .uob-intro__body {
-  font-size:  16px;
-  color:      var(--uob-text-muted);
-  line-height: 1.7;
+  font-size:   16px;
+  color:       var(--uob-text-muted);
+  line-height: 1.75;
 }
 
 .uob-intro__modes {
-  display:  flex;
-  gap:      12px;
+  display:         flex;
+  gap:             12px;
   justify-content: center;
-  flex-wrap: wrap;
+  flex-wrap:       wrap;
 }
 
 [dir="rtl"] .uob-intro__modes,
-.ux-onboarding-app[dir="rtl"] .uob-intro__modes {
-  justify-content: flex-start;
+.ux-onboarding-app[dir="rtl"] .uob-intro__modes { justify-content: flex-start; }
+
+.uob-intro__modes .uob-btn {
+  flex: 1;
+  min-width: 160px;
+  padding: 14px 24px;
+  font-size: 15px;
 }
 
-/* ── Info card ───────────────────────────────────────────────────────────── */
+/* ── Info / Reflection / Checkpoint cards ───────────────────────────────── */
 .uob-info-card,
 .uob-reflection,
 .uob-checkpoint {
   background:    var(--uob-surface);
   border:        1px solid var(--uob-border);
   border-radius: var(--uob-radius);
-  padding:       32px;
+  padding:       36px;
   display:       flex;
   flex-direction: column;
-  gap:           16px;
+  gap:           18px;
   width:         100%;
+  box-shadow:    var(--uob-shadow);
 }
 
 .uob-info-card__heading,
 .uob-reflection__heading,
 .uob-checkpoint__heading {
-  font-size:   20px;
-  font-weight: 700;
+  font-size:   21px;
+  font-weight: 800;
   color:       var(--uob-text);
+  line-height: 1.3;
 }
 
 .uob-info-card__body,
 .uob-reflection__body,
 .uob-checkpoint__body {
-  font-size:  15px;
-  color:      var(--uob-text-muted);
-  line-height: 1.7;
+  font-size:   15px;
+  color:       var(--uob-text-muted);
+  line-height: 1.75;
 }
 
-/* ── Reflection profile card ─────────────────────────────────────────────── */
+/* ── Reflection profile ──────────────────────────────────────────────────── */
 .uob-reflection__profile {
   background:    var(--uob-bg);
   border:        1px solid var(--uob-border);
   border-radius: var(--uob-radius-sm);
-  padding:       16px;
+  padding:       18px;
   display:       flex;
   flex-direction: column;
-  gap:           10px;
+  gap:           12px;
+  box-shadow:    var(--uob-shadow-xs);
 }
 
 /* ── Signal rows ─────────────────────────────────────────────────────────── */
 .uob-signal-row {
   display:     flex;
   align-items: baseline;
-  gap:         12px;
+  gap:         14px;
   font-size:   14px;
 }
 
-.uob-signal-row--wrap {
-  align-items: flex-start;
-}
+.uob-signal-row--wrap { align-items: flex-start; }
 
 .uob-signal-label {
-  font-weight:  600;
-  color:        var(--uob-text-muted);
-  flex-shrink:  0;
-  min-width:    110px;
-  font-size:    13px;
+  font-weight:    700;
+  color:          var(--uob-text-muted);
+  flex-shrink:    0;
+  min-width:      110px;
+  font-size:      12px;
   text-transform: uppercase;
-  letter-spacing: .04em;
+  letter-spacing: .05em;
 }
 
 .uob-signal-value {
-  color:        var(--uob-text);
-  font-weight:  500;
-  display:      flex;
-  flex-wrap:    wrap;
-  gap:          6px;
+  color:       var(--uob-text);
+  font-weight: 600;
+  display:     flex;
+  flex-wrap:   wrap;
+  gap:         6px;
 }
 
 .uob-signal-value--tag {
   background:    var(--uob-accent-light);
   color:         var(--uob-accent);
-  padding:       2px 8px;
-  border-radius: 4px;
-  font-size:     13px;
+  padding:       2px 9px;
+  border-radius: 20px;
+  font-size:     12px;
+  font-weight:   700;
   text-transform: capitalize;
 }
 
 .uob-signal-value--low    { color: var(--uob-success); }
 .uob-signal-value--medium { color: var(--uob-warning); }
-.uob-signal-value--high   { color: var(--uob-danger);  }
+.uob-signal-value--high   { color: var(--uob-danger); }
 
-/* ── Tags ─────────────────────────────────────────────────────────────────── */
+/* ── Tags ────────────────────────────────────────────────────────────────── */
 .uob-tag {
   background:    var(--uob-accent-light);
   color:         var(--uob-accent);
-  padding:       3px 9px;
-  border-radius: 4px;
+  padding:       3px 10px;
+  border-radius: 20px;
   font-size:     12px;
-  font-weight:   600;
+  font-weight:   700;
   text-transform: capitalize;
   white-space:   nowrap;
 }
@@ -506,82 +645,85 @@
 
 /* ── Summary screen ──────────────────────────────────────────────────────── */
 .uob-summary {
-  padding:        40px 48px;
+  padding:        48px 52px;
   display:        flex;
   flex-direction: column;
-  gap:            32px;
+  gap:            36px;
   max-width:      720px;
   margin:         0 auto;
-  animation:      uob-fade-in 250ms ease;
+  animation:      uob-step-in 360ms var(--uob-ease) both;
 }
 
 .uob-summary__heading {
-  font-size:   26px;
-  font-weight: 800;
-  color:       var(--uob-text);
+  font-size:      30px;
+  font-weight:    900;
+  color:          var(--uob-text);
+  letter-spacing: -.02em;
+  line-height:    1.2;
 }
 
 .uob-summary__body {
-  font-size:  15px;
-  color:      var(--uob-text-muted);
-  line-height: 1.7;
+  font-size:   15px;
+  color:       var(--uob-text-muted);
+  line-height: 1.75;
 }
 
 .uob-summary__section-title {
-  font-size:     13px;
-  font-weight:   700;
+  font-size:      12px;
+  font-weight:    800;
   text-transform: uppercase;
-  letter-spacing: .08em;
-  color:         var(--uob-text-muted);
-  margin-bottom: 12px;
+  letter-spacing: .09em;
+  color:          var(--uob-text-muted);
+  margin-bottom:  14px;
 }
 
 .uob-summary__profile {
   background:    var(--uob-surface);
   border:        1px solid var(--uob-border);
   border-radius: var(--uob-radius);
-  padding:       24px;
+  padding:       26px;
   display:       flex;
   flex-direction: column;
-  gap:           10px;
+  gap:           12px;
+  box-shadow:    var(--uob-shadow);
 }
 
 .uob-summary__answers {
   display:        flex;
   flex-direction: column;
-  gap:            24px;
+  gap:            28px;
 }
 
 .uob-summary__chapter {
   display:        flex;
   flex-direction: column;
-  gap:            16px;
+  gap:            18px;
 }
 
 .uob-summary__chapter-title {
-  font-size:   15px;
-  font-weight: 700;
-  color:       var(--uob-text);
-  padding-bottom: 8px;
-  border-bottom:  1px solid var(--uob-border);
+  font-size:      15px;
+  font-weight:    800;
+  color:          var(--uob-text);
+  padding-bottom: 10px;
+  border-bottom:  2px solid var(--uob-border);
 }
 
 .uob-summary__qa {
   display:        flex;
   flex-direction: column;
-  gap:            4px;
+  gap:            5px;
 }
 
 .uob-summary__q {
-  font-size:   14px;
+  font-size:   13px;
   color:       var(--uob-text-muted);
   font-weight: 500;
 }
 
 .uob-summary__a {
-  font-size:  15px;
-  color:      var(--uob-text);
-  font-weight: 600;
+  font-size:   15px;
+  color:       var(--uob-text);
+  font-weight: 700;
 }
 
 .uob-summary__actions {
@@ -590,78 +732,104 @@
   flex-wrap: wrap;
 }
 
-/* ── Responsive ──────────────────────────────────────────────────────────── */
+/* ── Submit feedback ─────────────────────────────────────────────────────── */
+.uob-submit-feedback {
+  display:       none;
+  padding:       16px 20px;
+  border-radius: var(--uob-radius-sm);
+  font-size:     14px;
+  font-weight:   600;
+  line-height:   1.5;
+}
+
+.uob-submit-feedback--success {
+  display:    block;
+  background: #f0fdf4;
+  color:      var(--uob-success);
+  border:     1.5px solid #a7f3d0;
+  box-shadow: 0 2px 8px rgba(16,185,129,.12);
+}
+
+.uob-submit-feedback--error {
+  display:    block;
+  background: #fef2f2;
+  color:      var(--uob-danger);
+  border:     1.5px solid #fecaca;
+}
+
+/* ── Responsive — Tablet ─────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .uob-layout {
     flex-direction: column;
   }
 
   .uob-sidebar {
-    width:  100%;
+    width:             100%;
+    padding:           14px 20px 12px;
+    flex-direction:    row;
+    flex-wrap:         wrap;
+    align-items:       center;
+    gap:               10px;
     border-inline-end: none;
-    border-bottom: 1px solid var(--uob-border);
-    padding: 16px 20px;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 12px;
+    border-bottom:     1px solid rgba(255,255,255,.08);
   }
 
+  .uob-sidebar::before { display: none; }
+
   .uob-sidebar__progress {
-    width: 100%;
-    order: -1;
+    width:  100%;
+    order:  -1;
   }
 
   .uob-chapter-list {
     flex-direction: row;
-    flex-wrap: wrap;
+    flex-wrap:      wrap;
   }
 
   .uob-chapter {
-    padding: 4px 8px;
+    padding:   5px 10px;
     font-size: 12px;
   }
 
-  .uob-chapter__count {
-    display: none;
-  }
+  .uob-chapter__count { display: none; }
 
   .uob-main {
-    padding: 24px 20px;
+    padding: 28px 22px;
   }
 
   .uob-question {
-    font-size: 19px;
+    font-size:   20px;
   }
 
   .uob-summary {
-    padding: 24px 20px;
+    padding: 28px 22px;
   }
 
   .uob-intro {
-    padding: 32px 24px;
-    min-height: 400px;
+    padding:    36px 26px;
+    min-height: 420px;
   }
 
   .uob-intro__heading {
-    font-size: 22px;
+    font-size: 24px;
   }
 
   .uob-intro__modes {
     flex-direction: column;
-    align-items: stretch;
+    align-items:    stretch;
   }
 
   .uob-info-card,
   .uob-reflection,
   .uob-checkpoint {
-    padding: 20px;
+    padding: 22px 18px;
   }
 }
 
+/* ── Responsive — Mobile ─────────────────────────────────────────────────── */
 @media (max-width: 480px) {
   .uob-option {
-    padding: 12px 14px;
+    padding: 13px 15px;
   }
 
   .uob-option__label {
@@ -669,36 +837,44 @@
   }
 
   .uob-actions {
-    flex-direction: column-reverse;
-    align-items: stretch;
+    flex-direction:  column-reverse;
+    align-items:     stretch;
   }
 
   .uob-btn {
-    width: 100%;
+    width:           100%;
     justify-content: center;
+  }
+
+  .uob-main {
+    padding: 22px 16px;
   }
 }
 
-/* ── Submit feedback ─────────────────────────────────────────────────────── */
-.uob-submit-feedback {
-  display:       none;
-  padding:       14px 18px;
-  border-radius: var(--uob-radius-sm);
-  font-size:     14px;
-  font-weight:   500;
-  line-height:   1.5;
+/* ── GSAP helper classes (added/removed by onboarding-animations.js) ──────── */
+.uob-gsap-hidden {
+  opacity:    0;
+  visibility: hidden;
 }
 
-.uob-submit-feedback--success {
-  display:     block;
-  background:  #f0fdf4;
-  color:       var(--uob-success);
-  border:      1px solid #bbf7d0;
+.uob-gsap-ready {
+  opacity:    1;
+  visibility: visible;
 }
 
-.uob-submit-feedback--error {
-  display:     block;
-  background:  #fef2f2;
-  color:       var(--uob-danger);
-  border:      1px solid #fecaca;
+/* Celebration overlay (summary) */
+.uob-celebration {
+  position:   fixed;
+  inset:      0;
+  pointer-events: none;
+  z-index:    9999;
+  overflow:   hidden;
+}
+
+.uob-confetti-dot {
+  position:   absolute;
+  width:      8px;
+  height:     8px;
+  border-radius: 2px;
+  opacity:    0;
 }
