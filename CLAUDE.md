@@ -15,3 +15,25 @@ Workflow rules:
 - Propose file structure before implementation
 - Keep selectors stable and scoped
 - Support RTL and responsive layout
+
+---
+
+## COMMAND: \היסטורית שיחה
+
+When the user types `\היסטורית שיחה`:
+1. Read `SCRATCHPAD.md` in full
+2. Summarize in a `<thought>` block:
+   - Connected systems and their status
+   - What was completed
+   - What is pending
+   - Last actions taken
+3. Present a concise Hebrew summary to the user: current state, last session, next steps
+4. Ask: "מאיפה להמשיך?"
+
+---
+
+## SCRATCHPAD Protocol
+
+After every meaningful action (code change, Make update, Telegram check, decision):
+- Append a timestamped entry to `SCRATCHPAD.md` under "לוג שיחות"
+- Format: `### YYYY-MM-DD — [נושא]` + bullet list of what was done
